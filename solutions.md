@@ -47,7 +47,15 @@ a = 5
 b = 10
 a, b = b, a
 ```
-Which is kinda just a python trick.
+Which is kinda just a python trick (it uses tuples).  
+The last way is using xor, which is done like this:
+```python
+a = 5
+b = 10
+a ^= b
+b ^= a
+a ^= b
+```
 
 ## Ex3
 ```python
@@ -133,13 +141,26 @@ for v in list(string):
         v = '*'
 print(string)
 ```
-This was the manual-ish way, this is using `.replace`:
+This was the manual-ish way, here's how to do it with `.replace`:
 
 ```python
 string = input("Enter string to replace characters: ")
 for v in "aeiou":
     string = string.replace(v, "*")
 print(string.replace(" ", "_"))
+```
+
+# Ex7
+```python
+string = input("Enter the string to check: ")
+s = set()
+for char in string:
+    s.add(char)
+
+if len(s) < len(string):
+    print("Not an isogram")
+else:
+    print("Isogram")
 ```
 
 # Chapter 8
@@ -154,8 +175,10 @@ print(y)
 print(doublit(5))
 ```
 
-#Ex2
+# Ex2
 ```python
+from typing import list, tuple
+
 def get_names() -> tuple:
     student_name = input("Please enter your name: ")
     teacher_name = input("Please enter your teacher's name: ")
@@ -231,9 +254,9 @@ def collatz(n: int) -> int:
 # Ex5
 ```python
 number = input("Enter an integer: ")
-s = set()
+s = []
 for digit in number:
-    s.add(int(digit))
+    s.append(int(digit))
 
 print(sum(s))
 ```
@@ -275,4 +298,40 @@ def get_valid_number() -> int:
 # Chapter 12
 
 # Ex1
+
+```python
+def read_lines_generator(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            yield line.strip()
+```
+
+# Chapter 14
+
+# Ex1
+This is the original loop:
+```python
+def print_arr(arr: list) -> None:
+    i = 0
+    while i < len(arr):
+        print(arr[i])
+        i += 1
+
+
+array = [0, 1, 1, 2, 3, 4, 8, 13, 21]
+```
+
+Note this isn't very pythonic, just looping over the array would be much nicer, but this is translating more directly from C, which is lower level so doesn't have this feature.  
+This is the recursive function: 
+```python
+def print_index(arr: list, index: int, n: int) -> None:
+    if index == n:
+        return
+    item = arr[index]
+    print(item)
+    print_index(arr, index + 1, n)
+
+array = [0, 1, 1, 2, 3, 4, 8, 13, 21]
+print_index(arr, 0, len(arr))
+```
 

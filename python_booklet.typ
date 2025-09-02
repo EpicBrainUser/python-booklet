@@ -509,7 +509,7 @@ if time >= SECONDS_IN_FIVE_MINUTES:
         ```python a = 5b = 10```\
         Print them to the screen. \
         Then swap their values, so that a becomes 10 and b becomes 5.\
-        There are two ways of doing this, if you've read a lot of python you may know the second, fancy way.\
+        There are three ways of doing this, if you've read a lot of python you may know the second, fancy way -- and you can also use the bitwise XOR (`^`) to do the swap.
     ]
 )
 
@@ -1267,6 +1267,12 @@ There are two keywords you need to know for while loops: \ `break` and `continue
 #exercise(
     title: [Character replace],
     content: [Read in a string and then replace all whitespace with underscores (`_`) , and all vowels with asterisks (`*`)]
+)
+
+=== Ex7
+#exercise(
+    title: [Isogram checker],
+    content: [An isogram is a word or phrase in which no letters repeat, for example 'uncopyrightable' and 'subdermatoglyphic' are isograms whereas 'eleven' isn't (the 'e' repeats). Write a program that takes an input and prints whether or not it is an isogram. ]
 )
 
 
@@ -2294,7 +2300,7 @@ Here are the valid modes you can use, and what they do:\
   ['+'], [Open for updating (read and write)]
 )
 ```python
-def return_file(filename:str, mode:str) -> TextIO:
+def return_file(filename: str, mode: str) -> TextIO:
     my_file = open(filename, mode)
     return my_file
 ```
@@ -2312,7 +2318,9 @@ If you want the file as a list you can also use these two options:\
 for line in f:
     print(line, end='')
 ```
-or simply:\
+This works because the file object is an iterable, meaning that you can loop over it with `for` as with any other iterable. \
+
+Equally you could just do this to get a list: \
 ```python list(f)```\
 
 
@@ -2369,7 +2377,7 @@ The `.json` format is pretty helpful for reading and writing data to files in a 
 
 In python, everything is an object - you can test this by wrapping anything in the `type` function.\
 ```python
-x : int = 12
+x: int = 12
 print(type(x))
 ```
 This gives us: ```python <class 'int'>```\
@@ -2925,8 +2933,8 @@ void print_index(int* arr, int index, int n)
         if (index == n) 
                 return;
         const int item = arr[index];
-        printf("%d", item);
-        print_index(arr, nIdx, n + 1);
+        printf("%d\n", item);
+        print_index(arr, index + 1, n);
 }
 ```
 And there, we've swapped normal iteration for a recursive function call, rewriting our loop in a more functional way. This works the same way in python, so try to apply what I've shown you here.\
