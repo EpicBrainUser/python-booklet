@@ -161,24 +161,53 @@
 //   Introduction
 // ]
 = Introduction
-Here are some basic things you should know about python: 
-+ Python is (mostly) Object Oriented.\
-  This paradigm of programming means everything is an object, you create objects, define what they do, how they interact, and the whole program is just made of objects. However in this booklet while I do talk about the object oriented and functional paradigms of python, since python is a multi paradigm language, the majority will be imperative and procedural, where you tell the program what to do step by step, rather than describing what to be done as in functional languages. 
-+ Python is Dynamically typed\
-  This means you don't specify the type of #glspl("var") when you create them, and they can change throughout your program. This also means you're gonna get runtime type exceptions.
-+ Python is strongly typed\
-  Unlike meme languages like JavaScript, the operation on a #gls("var") depends on its type, for example you can add two integers but not a string and an integer.
-+ Python is interpreted\
-  This means that when you run a file it gets translated into machine code line by line, as opposed to compiled before execution. This means you get runtime errors more, but it also has some benefits - such as that it can run on any OS and any architecture, as it's just-in-time compiled to bytecode and then ran on the python virtual machine. This does also mean that python is a lot slower than many other languages, like C, Rust or Zig.
+
+== What is this booklet, and how does it work?
+This booklet is a guide to how to code where I both cover the principles of programming, which you will be able to port over to other languages you learn, and the syntax of python. Throughout I include exercises and a few worked examples. The first couple of chapters cover just the syntax and some basic principles, and towards the end I cover more of the complex and high level programming concepts.
+
+== Meet python
+Python is a very high level language that supports a lot of features and is powerful in the right hands. It can be used for a very large amount of applications, such as data science, AI/machine learning, as well as some simple embedded systems such as the raspberry pi, which which runs on python. Python has a history of being a scripting language, so it's also commonly used for some system tasks and tools. \
+Due to python's high level nature, it does a lot of work under the hood for you, meaning it's fairly easy for people new to coding to pick up.
+// Here are some basic things you should know about python:
+// + Python is (mostly) Object Oriented.\
+//   This paradigm of programming means everything is an object, you create objects, define what they do, how they interact, and the whole program is just made of objects. However in this booklet while I do talk about the object oriented and functional paradigms of python, since python is a multi paradigm language, the majority will be imperative and procedural, where you tell the program what to do step by step, rather than describing what to be done as in functional languages. 
+// + Python is Dynamically typed\
+//   This means you don't specify the type of #glspl("var") when you create them, and they can change throughout your program. This also means you're gonna get runtime type exceptions.
+// + Python is strongly typed\
+//   Unlike meme languages like JavaScript, the operation on a #gls("var") depends on its type, for example you can add two integers but not a string and an integer.
+// + Python is interpreted\
+//   This means that when you run a file it gets translated into machine code line by line, as opposed to compiled before execution. This means you get runtime errors more, but it also has some benefits - such as that it can run on any OS and any architecture, as it's just-in-time compiled to bytecode and then ran on the python virtual machine. This does also mean that python is a lot slower than many other languages, like C, Rust or Zig.
 
 // #heading(level: 2, outlined: false)[
 //   Setting up your environment
 // ]
-  == Setting up your environment
-If you're running on a school machine you can either use the shell (zsh) and vim to run it, or IDLE. Vim and running a file with: ```zsh python3 {filename}.py``` is a generally better way to write, though. This is just me shilling vim, but I genuenly think it's a much nicer editor. IDLE is pretty rubbish and MS_Word might actually be better to use than IDLE.\
-I don't really know a super user friendly way to run it, but I think the terminal and an editor like vim isn't too bad.
+== Setting up your environment
+
+=== Installing python
+There are a couple ways to install python:
+- Using the official package:\
+Head over to #link("https://python.org/downloads")[python's website's downloads], and download and follow the instructions for installing it.\
+\ 
+- Using a package manager:
+You can also your OS's package manager for this, so `brew` on MacOS, `winget` or `choco` on windows and `apt`, `pacman`, `zypper`, `portage`, `dnf`, `xbps`, `pkg`, or any of the others I may have missed for GNU/Linux or similar. Don't worry if you don't know what this is.
+
+Once you have python installed, there are a couple ways to run python code on your computer, I show two ways:
+- Using a shell/terminal and (neo)vim
+I prefer this way and know how to this way better so I detail this below
+- Using a traditional text editor, like VSCode(ium) or Zed or PyCharm
+This has big friendly buttons to do everything, so if you're with one of these then you should be fine.
 
 // #pagebreak()
+
+=== Hold on, what is the python package?
+When you installed the python package, you actually get the full python system, which has:
+- The python virtual machine
+- Python's 'compiler'
+- A couple tools like `pip`
+The way python runs is like this:\ \
+``` Input -> compiled to bytecode -> ran on the virtual machine ```
+\ \
+This is partly why python has a reputation for being slow -- it doesn't compile to machine code. In this way python is interpreted, meaning it processes the input line by line.
 
 === Using the shell and vim
 If you have a simple file, like this:\
@@ -302,8 +331,11 @@ Once you've done that you have a baseline, you can start using vim. \
 I also suggest using their baseline init.vim or init.lua (for neovim, which is the modern version of vim, but you need to install it separately).
 
 
+==== The REPL
+Python comes with a REPL (Read Evaluate Print Loop), which you can run just by typing `python` (or `python3` on MacOS) which lets you quickly try out parts of the language. You can type in it like you were in a file, and it runs all the code right there letting you play around with the language a bit easier. 
+
 === Using a GUI editor like IDLE or Zed or VScode(ium) or PyCharm etc
-There are many great editors that work, I happen to like Zed the most of these but they all work, and with the python extension they all have linting and lsp and everything you may want out of the box. Just use their interfaces, save with File>Save As, Choose a filename, and then just save it as you go along, and run with the run button in them. 
+There are many great editors that work, I happen to like Zed the most, but they all work, and with the python extension/plugin they all have linting and LSP and everything you may want out of the box. Just use their interfaces, save with File>Save As, Choose a filename, and then just save it as you go along, and run with the run button in them.
 
 
 
