@@ -2971,12 +2971,52 @@ void print_index(int* arr, int index, int n)
 ```
 And there, we've swapped normal iteration for a recursive function call, rewriting our loop in a more functional way. This works the same way in python, so try to apply what I've shown you here.\
 
+=== Interview question with recursion
+
+There's a famous-ish interview question that goes like this:
+
+#quote(/*attribution: [ #link("https://docs.python.org/3/tutorial/errors.html")[Python Docs] ]*/)[
+"You are climbing a staircase. It takes n steps to reach the top.
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?"
+]
+
+This includes all permutations, so for example, if the staircase had 5 steps there would be 8 ways to climb the staircase:
+```
+1. 1, 1, 1, 1, 1
+2. 1, 1, 1, 2
+3. 1, 1, 2, 1
+4. 1, 2, 1, 1
+5. 2, 1, 1, 1
+6. 1, 2, 2
+7. 2, 1, 2,
+8. 2, 2, 1
+```
+Here I'll walk through the way to solve it recursively step by step: \
+- We need a base case:
+    - If it has 0 or 1 steps there's only one way to climb it, so let's define this as a starting point. 
+    ```python
+    def count_ways(stairs: int) -> int:
+        if stairs == 0 or stairs == 1:
+            return 1
+    ```
+    This is the only number we'll (manually) return from this function, the recursive calls do the rest.
+- And we need a recursive case:
+    - Thinking about it, there are two ways you can reach the top step: either having gone from two steps up or from one step up. So let's return those two cases, and all the ways to get to those two steps as well, like this:
+    ```python
+    def count_ways(stairs: int) -> int:
+        if stairs == 0 or stairs == 1:
+            return 1
+        return count_ways(stairs - 1) + count_ways(stairs - 2)
+    ```
+
+This function now calls itself modifying the input until the value is 1, and then closes all opened function calls feeding the number up the chain until it returns a single integer.
+
 == Summary exercises
 
 == Ex1
 #exercise(
     title: [Rewrite in python],
-    content: [Give what you've learned, take the above C code and rewrite it in python. It's easier in python as you don't have to worry about the length of the array in the fancy way as you just use `len()` or the method. ]
+    content: [Given what you've learned, take the C code I used as the example and rewrite it in python. It's easier in python as you don't have to worry about the length of the array in the fancy way as you just use `len()` or the method. ]
 )
 
 #note(
