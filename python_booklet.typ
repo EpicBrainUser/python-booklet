@@ -487,15 +487,15 @@ Therefore ```python age = 50``` works and ```python 50 = age``` doesn't.\
 If you're wondering why this is and how it's weird, this is discussed much later in my functional section #link(<functional-chapter>)[(link here)] that explains an alternative paradigm. However what is shown above works in procedural/OOP/imperative languages, which is what most python is. ]
 )
 
-Now, since we assign #glspl("var"), for calculations we can use #gls("var")s instead of actual values. Here's an example:
+Now, since we assign #glspl("var"), for calculations we can use #glspl("var")instead of actual values. Here's an example:
 ```python
 length = 13.6 
 
-width = 5.7 # Define width and length and store them in #gls("var")s
+width = 5.7 # Define width and length and store them in variables
 
-area = length * width # Calculates area by multiplying length by width, stores it in a #gls("var") but doesn't do anything with it
+area = length * width # Calculates area by multiplying length by width, stores it in a variable but doesn't do anything with it
 
-print(area) # Outpts 77.52
+print(area) # Outputs 77.52
 ```
 \
 Using #glspl("var") instead of values is a good practice in coding, as it makes your values more reusable, and often can read like a comment even if it's just used once, for example like here:\
@@ -509,6 +509,29 @@ if time >= SECONDS_IN_FIVE_MINUTES:
     ...
 # Better, this now reads more like a comment and explains the code nicer.
 ```
+
+#tip(
+    title: [Assignment shorthand (augmented assignment)],
+    content: [Not infrequently you'll want to update a value, and normally you would have to write it like this: 
+```python 
+    increment = 5
+    value = value + increment
+
+ ```
+But there's a nicer way of writing this, which is by putting the operators together, like this:
+```python
+    increment = 5
+    value += increment
+ ```
+Which is exactly the same as the previous, but it reads a bit nicer. This works for all operators, like so: 
+```python
+    a += 1
+    b -= 1
+    c *= 5
+    d /= 5
+
+ ```]
+)
 
 == Summary exercises
 === Ex1
