@@ -1908,7 +1908,7 @@ def enter_number() -> int:
 ```
 
 Recursion is less safe to use over traditional loops, because every new function you call, you don't terminate the previous function, you just put a new one on the call stack. This could potentially cause a stack overflow.\
-Recursion is very much linked to the functional paradigm, and it doesn't make much sense to go further in it here, so I go over it in much more detail in my Functional Programming in Python chapter. ADD A LINK!!
+Recursion is very much linked to the functional paradigm, and it doesn't make much sense to go further in it here, so I go over it in much more detail in my Functional Programming in Python chapter. #link(<functional-chapter>)[(link here)]
 
 == Summary exercises
 
