@@ -530,7 +530,8 @@ Which is exactly the same as the previous, but it reads a bit nicer. This works 
     c *= 5
     d /= 5
 
- ```]
+ ```
+This is an example of #gls("syn-sug")]
 )
 
 == Summary exercises
@@ -1836,7 +1837,7 @@ if __name__ == "__main__":
             print("Invalid choice, try again.")
 ```
 
-And looking at this it's kinda tedious because every time you want to use the functions sign_in or sign_up you have to call the wrapper, and use the returned wrapped function. Luckily no one codes like this and instead we use decorators like this: \
+And looking at this it's kinda tedious because every time you want to use the functions sign_in or sign_up you have to call the wrapper, and use the returned wrapped function. Luckily we don't actually have to code like this because we have decorators: which are #gls("syn-sug") for function wrappers which make it way nicer to use them. Here's the same example using decorators: \
 
 ```python
 def require_credentials(func):

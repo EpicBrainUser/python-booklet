@@ -78,8 +78,13 @@
     short: "memory",
     long: "main memory",
     description: "Computer memory stores data for immediate use by the computer. This is referring to RAM - Random Access Memory."
+  ),
+  (
+    key: "syn-sug",
+    short: "syntactic sugar",
+    long: "syntactic sugar",
+    description: "Part of language syntax that makes it easier to use/read for humans. It makes the code 'sweeter'."
   )
-
 
 )
 
