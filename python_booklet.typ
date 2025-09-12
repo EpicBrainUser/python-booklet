@@ -2145,6 +2145,8 @@ In python, there are two kinds of errors:\
     "Even if a statement or expression is syntactically correct, it may cause an error when an attempt is made to execute it. Errors detected during execution are called exceptions and are not unconditionally fatal: you will soon learn how to handle them in Python programs."
   ]
 
+== Catching exceptions
+By default if an exception is _raised_, the program will crash. To avoid this we run them in a `try/except` clause. To catch an error, you need to know what might fail. 
   There are many different types of exceptions, for example: ZeroDivisionError, ValueError, FileNotFoundError, NameError, TypeError and so on.
   Here's how to catch them with the `try/except` clause:
 ```python
@@ -2207,8 +2209,9 @@ finally:
       # A single finally block here
 ```
 \
+== Raising exceptions
 However sometimes you also want to deliberately cause an error to crash the program, and then either catch this or let it terminate the code. \
-For this you use `raise` keyword, like this:\
+For this you use ```python raise``` keyword, like this:\
 ```python
 def check_age(age:int):
     if age < 0:
@@ -2238,6 +2241,27 @@ def main():
 \
 Which just outputs:\
 ``` Age can't be negative!```
+
+== Custom errors
+At some point you may want to write your own errors to be raised and caught. For this you need to define a custom error #gls("cls"), which is part of the object oriented part of python, but that's covered in chapter 13 #link(<oop-ch>)[(link here)]. For now, just try to follow along: \
+```python
+class MyCustomError(Exception):
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
+        self.message = message
+```
+Here we made a custom class that makes an error object inheriting from the `Exception` class. \
+This now introduces the `MyCustomError` as a valid error that can be raised. You can supply a message to it as well, which will allow you to catch and do something with it. \
+You can also create instances of this class by assigning it to variables like this: \
+```python simple_message = MyCustomError("hi, you've raised an exception")```
+And then raising the error like this: \
+```python
+try:
+    raise simple_message
+except simple_message as e:
+    print(e)
+```
+
 
 
 == Summary exercises
@@ -2435,7 +2459,7 @@ The `.json` format is pretty helpful for reading and writing data to files in a 
     content: [I still have yet to add the exercises here, at some point I will update this.]
 )
 
-= Object Oriented Programming in Python
+= Object Oriented Programming in Python <oop-ch>
 
 In python, everything is an object - you can test this by wrapping anything in the `type` function.\
 ```python
