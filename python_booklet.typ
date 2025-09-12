@@ -442,7 +442,7 @@ In actuality, a #gls("var") is a symbolic identifier bound to a mutable referenc
 
 Let's break down what that means: \
 A #gls("var") is just a name that references something - usually an #gls("obj") as python is an #gls("oop") language. This means that you use #glspl("cls") to make #glspl("obj") of certain data types, which can be both built in and custom.
-It holds the #gls("mem") address which 'points' to the #gls("mem") where data is actually stored, hense the name #gls("ptr").\
+It holds the #gls("mem") address which 'points' to the #gls("mem") where data is actually stored, hence the name #gls("ptr").\
 Because of this, python doesn't actually have #glspl("var"), just a name that stores a memory address. This later helps explain some things such as how functions pass parameters, and data mutation.
 
 There are also constants, which are in almost all respects the same as #glspl("var"), but they are #gls("imu") - which means that their value cannot change throughout the program.\
@@ -458,8 +458,8 @@ When choosing #gls("var") names there are a few rules you have to follow:\
 + #gls("var") names must not have spaces - so you couldn't have `my name` as a #gls("var"), you would have to have either `my_name` or `myName` or `MyName`
 + #gls("var") names must not use any reserved keywords - you *cannot* use them as a name. See below for a list.
 + #gls("var") names must not start with a number or an operator: so you can't have `3apples` as a #gls("var"), or `+count` as a #gls("var"), however you can have numbers in your #glspl("var") - so `more_than_3_apples` is ok, and you can start with an underscore - `_3apples` is ok. The last use is often used for #gls("var")s which aren't used in the program.
-+ If you go with a naming style keep it consistant throughout.
-+ This isn't exactly a rule but follow pep8 naming convensions: use `snake_case` for #gls("var")s and function names, use `PascalCase` for class names.
++ If you go with a naming style keep it consistent throughout.
++ This isn't exactly a rule but follow pep8 naming conventions: use `snake_case` for #gls("var")s and function names, use `PascalCase` for class names.
 + Try to use sensible names for #gls("var")s\ 
 e.g for a student's name use #h(1em) `student_name` #h(1em) not #h(1em) `sn` #h(1em) or #h(1em) `a` #h(1em) . A good name is descriptive for what it is.\
 
@@ -530,6 +530,12 @@ Which is exactly the same as the previous, but it reads a bit nicer. This works 
     c *= 5
     d /= 5
 
+    e &= 2
+    f |= 10
+    g ^= a
+    h ~= e
+    i <<= 1
+    j >>= 1
  ```
 This is an example of #gls("syn-sug")]
 )
@@ -752,7 +758,7 @@ You could use your whole #gls("mem") to hold a single integer and you would be f
 
 == Float (float)
 
-A floating point number, or float, is a data type that can hold decimals. It's handeled as a floating point, as it can move around in the number and the #gls("mem") useage is the same. Have a look:
+A floating point number, or float, is a data type that can hold decimals. It's handled as a floating point, as it can move around in the number and the #gls("mem") usage is the same. Have a look:
 ```python
 a = 1.2345
 b = 12.345
@@ -761,13 +767,13 @@ d = 1234.5
 ```
 All of these numbers take up the same amount of #gls("mem"), but the decimal point 'floats' in the number.\
 
-=== Floating point number arithmatic
+=== Floating point number arithmetic
 Beware, sometimes floats misbehave - because of how the computer - which works in binary - handles them. Take a look at this example:
 ```python
 >>> 0.1 + 0.2
 0.30000000000000004
 ```
-This is due to rouding that occures, a bit like how you can't store $1/3$ as a decimal properly in denary.
+This is due to routing that occurs, a bit like how you can't store $1/3$ as a decimal properly in denary.
 
 == Boolean (bool)
 A boolean value can be `True` or `False`.
@@ -804,11 +810,11 @@ As much as I would like to give some more fun or challenging exercises here I ca
 
 == Lists
 
-A list is a #gls("mut"), ordered, indexible collection of data that can be heterogeneous.
+A list is a #gls("mut"), ordered, indexable collection of data that can be heterogeneous.
 Let's explore what that means:
 Mutable means that it can change.\
 Ordered means it has an order, and it won't change, unlike with sets.\
-Indexible means that each value has an index, and you can view and change via indexing.\
+Indexable means that each value has an index, and you can view and change via indexing.\
 Heterogeneous means it can hold mixed data types.
 
 === Common methods for lists:
@@ -855,7 +861,7 @@ Arrays are in almost all respects the same as lists, except for just some small 
 
 == Tuples
 Tuples are much like lists, with they exception that they are #gls("imu").\
-In all other respects they are the same, so they are indexible and can hold mixed data types (heterogeneous data types).
+In all other respects they are the same, so they are indexable and can hold mixed data types (heterogeneous data types).
 
 You declare a tuple with `()` as opposed to lists which use `[]`.
 
@@ -1196,7 +1202,7 @@ for i in range(10):
     print(i)
 ```
 This makes an iterable that ranges from 0 to 9.\
-`range()` also takes optional arguemnts, so here it takes a start index as well:
+`range()` also takes optional arguments, so here it takes a start index as well:
 ```python
 for i in range(3, 10):
     print(i)
@@ -2318,7 +2324,7 @@ Here's how to use virtual environments:\
 First make sure your source code is all in a single directory with nothing else in it. \
 Then run this in the project directory:\
 ```sh python -m venv env```\
-This makes a directory called `env` that houses your environemnt. To activate it run this:\
+This makes a directory called `env` that houses your environment. To activate it run this:\
 ```sh source env/bin/activate```\
 Now you are ready to install packages with pip. Installing them with the package manager is really easy, just use `pip install {package name} ``` to install and `pip uninstall {package name}` to uninstall. If you want he help page just run `pip` with no arguments.
 \
@@ -2458,7 +2464,7 @@ Alright, let's start making our own classes, with this example we are making a s
 class AritheticClass:
     def __init__(self, value):
         self.value = value```
-- Then we can add our own methods (which are really funtions) to the class:\
+- Then we can add our own methods (which are really functions) to the class:\
 ```python 
 class AritheticClass:
     def __init__(self, value):
@@ -2493,7 +2499,7 @@ print(a)
 ```
 The `__str__` method only returns a string, so you need to wrap it in the `str()` if it's not a string.\ \
 
-The only point of `__init__` is to initialise the class the variables, not to do anything else. Hense the other dunder methods - such as `__str__` for string representation.\
+The only point of `__init__` is to initialise the class the variables, not to do anything else. Hence the other dunder methods - such as `__str__` for string representation.\
 \
 Any dunder method (double underscore), sometimes called a magic method is a method that does something special to python, for example there's the `__len__` method for defining a result when ran in the `len` function. 
 
@@ -2525,7 +2531,7 @@ def function(a, b):
 result = function(0, 1, 2)
 ```
 You may be confused as we only gave it `a, b` in the function call, but this error occurs because we have an instance method, which takes `self` (this can be called anything but by conversion it's called `self` in python, so python assumes you called the `self` instance parameter `a`). \
-One way to fix this is to add self in the functin definition, like this:\
+One way to fix this is to add self in the function definition, like this:\
 
 ```python
     def add_two_values(self, a, b):
@@ -2554,7 +2560,7 @@ class ArithmeticClass:
 
 == Inheritance
 
-The idea behind inheritance is that it allows you to more easily write similar classes by abstracting them to a 'parent' class and the 'child' classes inherit their properties, state, and behaviours. Then in the child class you can add seperate functionality without having to copy and paste the whole parent class. \
+The idea behind inheritance is that it allows you to more easily write similar classes by abstracting them to a 'parent' class and the 'child' classes inherit their properties, state, and behaviours. Then in the child class you can add separate functionality without having to copy and paste the whole parent class. \
 For example (and for this example I'm going to abstract the ideas, so it may not actually be a viable option if you were going to try build this), if you were building a city simulation game, and in the city there are many buildings.\
 Without inheritance, you might make a class for a school, one for a home, one for a skyscraper and so on; but all these classes have lots of things in common, like similar materials, having doors and windows, and structural elements. \
 Here's some representative pseudocode:\
@@ -3037,10 +3043,17 @@ This function now calls itself modifying the input until the value is 1, and the
 
 == Summary exercises
 
-== Ex1
+=== Ex1
 #exercise(
     title: [Rewrite in python],
     content: [Given what you've learned, take the C code I used as the example and rewrite it in python. It's easier in python as you don't have to worry about the length of the array in the fancy way as you just use `len()` or the method. ]
+)
+
+=== Ex2
+#exercise(
+    title: [Binary search],
+    content: [Using recursion, so no mutation of variables, write a binary search function, where given a list and an item will return a boolean depending on whether it was found. Binary search cuts in half repeatedly until the item is found, and only works for sorted data. \
+This is an ideal problem to solve with recursion, as it can easily be broken down, and there are clear cases. Try to apply what you've learned.]
 )
 
 #note(
