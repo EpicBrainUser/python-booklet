@@ -387,18 +387,27 @@ Logical operators:
   [```python <```], [Less than], [```python 10 < 10```], [```python False```],
   [```python >=```], [Greater-than-or-equal-to], [```python 10 >= -1```], [```python True```],
   [```python <=```], [Less-than-or-equal-to], [```python 10 <= 10```], [```python True```],
+  [```python and```], [Logical AND], [```python True and False```], [```python False```],
+  [```python or```], [Logical OR], [```python True or False```], [```python True```],
+  [```python not```], [Logical NOT], [```python not (True and False)```], [```python True```],
 )
+All these values return a #gls("bool") (True or False). \
+The last three are slightly different so I'll go over them: \
+The `and` compares two #gls("bool") expressions, and returns `True` if they are both True. \
+The `or` also compares two #gls("bool") expressions, and returns `True` if they are different, otherwise returning `False`. \
+The `not` is a bit different and is used to negate a #gls("bool") expression, as shown above. So if it's True it returns False and vice versa. \
+
 Lastly I want to cover bitwise operators, which are a bit more confusing and aren't used very often, but can sometimes be useful like multiple return types from functions, where you want either to return the value or to return None or an error or something.
 
 #table(
   columns: 2,
   table.header[*Operator*][*Name*],
-  [&],[AND],
-  [|],[OR],
-  [\~],[NOT],
-  [^],[XOR],
-  [>>],[Right shift],
-  [<<],[Left shift],
+  [&],[Bitwise AND],
+  [|],[Bitwise OR],
+  [\~],[Bitwise NOT],
+  [^],[Bitwise XOR],
+  [>>],[Bitwise Right shift],
+  [<<],[Bitwise Left shift],
 )
 // TBA for most of this part.\
 \ They work only on integers and they perform binary operations, which are beyond the scope of this guide, but if you're interested look them up! \
@@ -408,8 +417,8 @@ What they do is take a binary number, like take 10 base 10 in binary: \
 0000 1010 ; base 10 binary, let's perform a left shift
 0001 0100 ; as you see we just shifted everything to the left, this is now 20 in base 10
 ```
-In base ten, let's have a look how this would work so it's more familiar, so suppose you have the number 24, and we shift left, we get 240, in effect we multiplied by 10 - the base number. Now let's perform two left shifts: 240 becomes 2.4. This divided by 100. \
-These shifts are really fast for shifts in computers, but can sometimes be slightly inaccurate as it works on integers and rounds off when dividing (performs _integer division_). In base 2 (binary), it ends up multiplying and dividing by 2 per shift. \
+In base ten, let's have a look how this would work so it's more familiar, so suppose you have the number 24, and we shift left, we get 240, in effect we multiplied by 10 - the base number. Now let's perform two right shifts: 240 becomes 2.4. This divided by 100. (actually it would just be 2, as this only works with integers so truncates the rest)\
+These shifts are really fast for shifts in computers, but can sometimes be slightly inaccurate as it works on integers and truncates when dividing (performs _integer division_), so for example `11 >> 1` becomes 5. In base 2 (binary), it ends up multiplying and dividing by 2 per shift. \
 
 
 You may have seen some C++ before that uses these >> and << operators for printing to the screen. This doesn't happen in python, but for the curious readers this is how it looks:\
@@ -603,8 +612,8 @@ Python doesn't have the `char` data type, but many languages, including OCR refe
 - `.upper` converts to upper case
 - `.lower` converts to lower case
 - `.len`   returns the length of the string
-- `.startswith(char)`   returns a boolean telling you whether it starts with the specified character
-- `.endswith(char)`   returns a boolean telling you whether it ends with the specified character
+- `.startswith(char)`   returns a #gls("bool") telling you whether it starts with the specified character
+- `.endswith(char)`   returns a #gls("bool") telling you whether it ends with the specified character
 - `.split(char)` splits your string into a list based on the given deliminator you passed in
 - `.format` allows for injecting variables into lists (shown below)
 - `.isdigit` returns True or False depending if only digits are in the string
@@ -776,7 +785,7 @@ Beware, sometimes floats misbehave - because of how the computer - which works i
 This is due to routing that occurs, a bit like how you can't store $1/3$ as a decimal properly in denary.
 
 == Boolean (bool)
-A boolean value can be `True` or `False`.
+A #gls("bool") can be `True` or `False`.
 This is often returned as a value for use in control flow (see #underline[@control-flow])
 They are handled as ints in python, and if you cast them as an int you get 0 and 1:
 ```python
@@ -906,7 +915,7 @@ Now suppose we want to add Billy to this dictionary. Here's how we add a new val
 ```python
 people_to_ages["Billy"] = 7
 ```
-Dictionaries can hold mixed key-value pair types, so we could add an integer to a boolean here like this:
+Dictionaries can hold mixed key-value pair types, so we could add an integer to a #gls("bool") here like this:
 ```python
 people_to_ages[69] = True
 ```
@@ -946,7 +955,13 @@ You can't index a set as the elements are unordered, but instead you can use the
 my_set = {1,2,3}
 print(0 in my_set)  # Prints False
 ```
-This is mostly what sets are used for, as checking if something is in a set is much faster than in a list.
+This is mostly what sets are used for, as checking if something is in a set is much faster than in a list. \
+
+#tip(
+    title: [Using the ```python in``` keyword],
+    content: [The ```python in``` keyword works for all container data types (lists, arrays, tuples, sets, dictionaries etc), and also custom types with the `__contains__` dunder method (though this is part of the OOP of python, see #link(<oop-ch>)[chapter 13] for an explanation. ) \
+This works exactly the same way as the `.find` method or a normal search, but it's much faster as it's a python in built. ]
+)
 
 #note(
   title: [Note: Type annotations],
@@ -1028,7 +1043,7 @@ tuple -> ()
 dict  -> {}
 set   -> set()
 ```
-In all of these cases, they evaluate to false in a boolean context, which means that you can make if statements with just ```python
+In all of these cases, they evaluate to false in a #gls("bool") context, which means that you can make if statements with just ```python
 if variable:
     # Some code
     ```
@@ -1039,7 +1054,7 @@ if variable:
 
 Here's how it works:
 
-You use the `if` keyword followed by a condition that returns a boolean value or has a truthy value, and if it evaluates to True, then the code in the indented block runs.\
+You use the `if` keyword followed by a condition that returns a #gls("bool") or has a truthy value, and if it evaluates to True, then the code in the indented block runs.\
 
 Let's see an example:
 ```python
@@ -1098,7 +1113,7 @@ else:
   content: [One way to handle errors to cover everything in `elif` blocks and leave `else` behind to catch anything you may have missed, rather than using it to catch wanted data. However don't over rely on this, as I later discuss when I talk about inversion to avoid nesting.]
 )
 
-Lastly for this if block, using `not` negates the boolean, so for example:\
+Lastly for this if block, using `not` negates the #gls("bool"), so for example:\
 ```python
 if age > 18 and not country_of_residence == "USA":
     print("You can (legally) drink ethanol")
@@ -1277,7 +1292,7 @@ while running:
     else:
         print("Answer not 'n', continuing")
 ```
-You can also evaluate statements that return a boolean in the `while` loop:
+You can also evaluate statements that return a #gls("bool") in the `while` loop:
 ```python
 lives = 5
 health = 100
@@ -1391,7 +1406,7 @@ Usage: ```python sorted({5, 2, 7, 8})  # Returns [2, 5, 7, 8] ```
 Optionally it takes `reverse = True` to reverse the returned list.
 
 - `all`/`any`
-Function: Check if all or any (respectively) values are true/truthy. Returns a boolean.\
+Function: Check if all or any (respectively) values are true/truthy. Returns a #gls("bool").\
 Usage: ```python any(False, '')  # -> False```
 
 - `eval`
@@ -3076,7 +3091,7 @@ This function now calls itself modifying the input until the value is 1, and the
 === Ex2
 #exercise(
     title: [Binary search],
-    content: [Using recursion, so no mutation of variables, write a binary search function, where given a list and an item will return a boolean depending on whether it was found. Binary search cuts in half repeatedly until the item is found, and only works for sorted data. \
+    content: [Using recursion, so no mutation of variables, write a binary search function, where given a list and an item will return a #gls("bool") depending on whether it was found. Binary search cuts in half repeatedly until the item is found, and only works for sorted data. \
 This is an ideal problem to solve with recursion, as it can easily be broken down, and there are clear cases. Try to apply what you've learned.]
 )
 

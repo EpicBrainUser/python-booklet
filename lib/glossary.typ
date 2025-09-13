@@ -84,6 +84,12 @@
     short: "syntactic sugar",
     long: "syntactic sugar",
     description: "Part of language syntax that makes it easier to use/read for humans. It makes the code 'sweeter'."
+  ),
+  (
+    key: "bool",
+    short: "boolean",
+    long: "boolean value",
+    description: "A value that can only hold one of two values, True or False. This was named after George Boole, coming from boolean algebra."
   )
 
 )
