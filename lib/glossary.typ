@@ -5,14 +5,14 @@
   (
     key: "var",
     short: "variable",
-    long: "variable",
+    // long: "variable",
     description: "In programming, a variable is a symbolic identifier bound to a mutable reference that stores an object or value in memory. Technically, it functions as a named pointer to a memory location where data is stored, enabling indirect manipulation of the underlying value through the identifier."
   ),
 
   (
     key: "obj",
     short: "object",
-    long: "object",
+    // long: "object",
     description: "An object is a runtime entity which encapsulates state (data), behaviour (operations) and identiy (unique existance). It represents an instance of a class in Object Oriented Programming."
   ),
 
@@ -26,28 +26,29 @@
   (
     key: "ptr",
     short: "pointer",
-    long: "pointer",
+    // long: "pointer",
     description: "A pointer is a primitive data type storing the memory address as its value - which enables indirect data access. They are used for manual memory management."
   ),
 
   (
     key: "cls",
     short: "class",
-    long: "class",
+    // long: "class",
+    plural: "classes",
     description: "A class is a construct in object-oriented programming that defines an object with its characteristics and shared aspects from the class."
   ),
 
   (
     key: "mut",
     short: "mutable",
-    long: "mutable",
+    // long: "mutable",
     description: "A characteristic of an object or data type that allows it to change after initialisation."
   ),
 
   (
     key: "imu",
     short: "immutable",
-    long: "immutable",
+    // long: "immutable",
     description: "A characteristic of an object or a data type that means that it cannot change its initial value."
   ),
 
@@ -82,7 +83,7 @@
   (
     key: "syn-sug",
     short: "syntactic sugar",
-    long: "syntactic sugar",
+    // long: "syntactic sugar",
     description: "Part of language syntax that makes it easier to use/read for humans. It makes the code 'sweeter'."
   ),
   (
@@ -90,8 +91,15 @@
     short: "boolean",
     long: "boolean value",
     description: "A value that can only hold one of two values, True or False. This was named after George Boole, coming from boolean algebra."
-  )
+  ),
 
+  (
+    key: "magic-num",
+    short: "magic number",
+    // long: "magic number",
+    longplural: "magic numbers",
+    description: "A number that has a special or particular meaning that isn't make clear to the reader, for example writing `return diameter * 3.141592` inside a find_circumference(diamter) function, makes it so that 3.141592 is unclear, unless you recognise it as pi. It is often better to put it as a constant or variable in the program, or define it as a macro."
+  )
 )
 
 // Register entries for global use

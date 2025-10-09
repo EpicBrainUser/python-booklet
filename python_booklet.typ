@@ -507,13 +507,18 @@ area = length * width # Calculates area by multiplying length by width, stores i
 print(area) # Outputs 77.52
 ```
 \
+#tip(
+    title: [Comments in your code],
+    content: [Any line that begins with a `#` character in python is ignored, meaning your can write 'comments' in your code, like to explain what it does/why it's there, but also you can use it to temporarily stop code from running when you're testing your code. You can also do this by surrounding it in triple `"""`, which is known as a docstring (mostly used for documentation of functions). \
+Anyway, here I just use to to explain the code inside it. I go more in-depth on comments, and perhaps why you shouldn't explain how your code works in them in chapter 9 #link(<better-struct>)[chapter 9]]
+)
 Using #glspl("var") instead of values is a good practice in coding, as it makes your values more reusable, and often can read like a comment even if it's just used once, for example like here:\
 ```python
 if time >= 300:
     ...
 # Bad, this we don't know what 300 is here!
 
-SECONDS_IN_FIVE_MINUTES
+SECONDS_IN_FIVE_MINUTES = 300
 if time >= SECONDS_IN_FIVE_MINUTES:
     ...
 # Better, this now reads more like a comment and explains the code nicer.
@@ -2039,7 +2044,7 @@ This is trivial, but there's a fancy way of doing it so it's a one-liner. If you
     content: [Write a generator function with yield that produces and infinite Fibonacci sequence.]
 )
 
-= Better code structure
+= Better code structure <better-struct>
 Up until here, I've just given you a bunch of tools and how to use them, but not suggested when to use them. \
 Here's just some basic advice on how you should be writing your code:\
 
@@ -2071,6 +2076,97 @@ Basically have a main function that you call in the if block at the end.
 This is a `dunder` method that checks you are running the file directly, not importing it as a package/module. Again explained fully in the other files chapter.\ \
 
 In a large number of cases you won't actually want a `main` function you call, but often something else you want to call to start execution, for example the init from a class.
+
+== Writing comments
+You may think that as your programming skills grow and the length of your programs increase, you should place more and more comments in your code to explain what it does, so that anyone reading it will more easily understand it. \
+While this does have an element of truth, I'd like to present the more controversial view that you probably shouldn't be using comments in your code in most cases. 
+
+=== Replacing comments with writing code
+Here's the argument, which I touched on in chapter 3:
+If your code isn't obvious, you should endeavour to make the code more easily readable and comprehensive rather than trying to use natural language to explain it. \
+Here I'll explain how you might do this with some examples: \
+This is the example I'll use for a couple points: \
+```python
+# function returns the circumference of a circle
+def function(a):
+    # a is the diameter taken into the function
+    # 3.141 is pi, which we multiply the diameter to get the circumference
+    return a * 3.141
+
+```
+0. Using descriptive names \
+    This might be really really obvious but using good, descriptive, clear and mostly short names for functions variables and classes is really important to keep your code easy to read and use. Here we had to explain what the function did and what the parameter was. Instead if we had written this: \
+```python
+def find_circumference(diameter):
+    # 3.141 is pi, which we multiply the diameter to get the circumference
+    return diameter * 3.141
+```
+Now we don't need the two extra comments.
+
+
+1. Using variables to avoid #glspl("magic-num") \
+    A #gls("magic-num") is a number that isn't clear what is to the reader. In the above function, there is this $3.141$ which is kinda just floating around, while this is rather simplistic and we can all recognise it as $pi$ it still may be unclear, and makes the code harder to follow. \
+To make this better, we can define it as a constant: \
+```python
+def find_circumference(diameter):
+    PI = 3.141
+    # 3.141 is pi, which we multiply the diameter to get the circumference
+    return diameter * PI
+```
+Now we can remove the comment as it reads the same as the constant PI. Or, even better if we import it from math:\
+```python
+import math
+def find_circumference(diameter):
+    return diameter * math.pi
+```
+This was the point I made in chapter 3 when I introduced variables.
+
+2. Using types instead of comments \
+    Suppose we had this function here:
+```python
+    # Function looks for a user and returns it if the user 
+    # is in the users dictionary of username: user, otherwise returns None
+    def find_user(self, username):
+        return self.users.get(username)
+```
+But we can actually replace the comment with a type annotation:
+```python
+    def find_user(self, username: str) -> User | None:
+        return self.users.get(username)
+```
+And it says the exact same thing as the comment, just that now you don't have the problems with the comments. \
+As an additional benefit your code editor probably also now can tell you more about this function.
+
+=== Problems with comments
+Comments get bugs, just like code. Often this happens when you update the code but not the comment, and you get comments like this:
+```python
+# Verify the users password is at least 8 characters long
+if len(password) < 10:
+    return False
+```
+The thing is, we have tests for code, and the syntax and sometimes semantics are enforced by the translator, whereas comments don't have this. \
+This means that often when you read a program's code to figure out how it works, it often makes most sense to read just the code, not the comments, as comments lie. \
+
+Equally there's often no need for comments that describe what the code does about 99% of the time. This is because code is self-descriptive, so you have code the explains what it does, and you know what it does just by reading it, if you know the language. \
+
+=== When to actually write comments
+You should write comments if the code does something non-obvious because of performance reasons, (or any reason good enough to grant this), you should explain the code if you judge that the reader may fail to do so themselves. \
+The other reason to write comments is to explain _why_ a piece of code is there, not _how_ it works. A reader will be able to understand how it works just by reading it, but might not know why it's there. This is when you may consider leaving comments in your code. \
+Lastly if you used a function from somewhere, like if you imported it, you may consider writing a comment linking to it. 
+
+== Code documentation
+This is different from code comments, as it describes the high-level architecture of the code, rather than the inner working of how the code works. Explains how to use the code. Luckily the documentation for code can be written with the code, and then using tools like doxygen or pydoc you can automatically generate documentation. \
+=== Python specifics
+Python has its own specific way of documenting code, so I'll go over the way to do it here:
+
+==== Functions
+Functions in python use docstrings (triple quotes) right under the definition like this:
+#note(
+    title: [Unfinished],
+    content: [This part here is unfinished, at some point I'll come back and add this content. ]
+)
+
+
 
 == Never nesting
 Kind of a misnomer here, but basically the idea is that you don't nest your code more than 3 times — i.e your indents aren't more than 3.\
@@ -3475,6 +3571,8 @@ Result: Success for task 3
     - A very helpful video for python's syntax, explained in a 'no fluff' fast way
 - #link("https://www.youtube.com/watch?v=CFRhGnuXG-4")[Why you shouldn't nest your code]
     - From code aesthetic, where I learned the 'never nesting' philosophy
+- #link("https://www.youtube.com/watch?v=Bf7vDBBOBUA")[Don't write comments]
+    - Again from code aesthetic, where I got my views on comments which I explain in chapter 9
 - #link("https://www.youtube.com/watch?v=nuML9SmdbJ4")[Dear functional bros]
     - Also from code aesthetic, from which I learned a lot of the functional concepts from chapter 14. The examples are in JavaScript, but it's pretty easy to understand while knowing no JavaScript, as the concepts are what matter, not the syntax.
 - #link("https://www.youtube.com/watch?v=JeznW_7DlB0&pp=ygUKcHl0aG9uIE9PUA%3D%3D")[OOP for beginners]
