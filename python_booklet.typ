@@ -618,9 +618,9 @@ Every #gls("var") you make has to be of a certain type, and below are the basic 
 Actually when you make a #gls("var") you initialise an instance of an #gls("obj"), which is made from one of the in-built #glspl("cls") python has. These #glspl("obj") have certain properties, and functions. The functions are called `methods` and are what the #gls("obj") can do. For example for a string, you can convert it to all upper case by having ```python string.upper()```. The `.upper()` is the method, which is a function on an #gls("obj") that allows it to do something. 
 
 == String (str)
-A string is just a series of characters, in quotation marks, either double or single.\
+A string is just a series of characters, in quotation marks, either double or single. In lower level languages a string is an array of characters, often terminated with a null terminator ('\0'). \
 === Character (char)
-Python doesn't have the `char` data type, but many languages, including OCR reference language, do - so you need to know about it. A character - as the name might imply, is just a single character. You can think of it as a string constrained to just a single element. 
+Python doesn't have the `char` data type, but many languages, including OCR reference language, do - so you need to know about it. A character - as the name might imply, is just a single character. You can think of it as a string constrained to just a single element; however this is wrong low level as it's actually the other way around, where a string is an array of characters, but you don't have to worry about this in python.
 
 === Common methods for strings
 - `.upper` converts to upper case
@@ -818,6 +818,10 @@ a = str(a) # Here I cast it as a string
 print(type(a)) # outputs "<class 'str'>"
 ```
 You might have noticed the _#gls("cls")_ when printing the type of a #gls("var"). That is - as mentioned before - because a #gls("var") is bound to an #gls("obj") of its class. The class determines its type when printing the type of a #gls("var"). That is - as mentioned before - because a #gls("var") is bound to an #gls("obj") of it's class. The class determines its type.
+
+== None
+```python None``` is sort of a weird data type, but it signifies the absence of a value. You see this most frequently as either a check for presence or as a type annotation. \
+This is often ```c void``` in other languages.
 
 
 == Summary exercises
