@@ -374,7 +374,9 @@ Let's have a brief look at python's operators.
   [/\/], [Integer division (returns floored quotient)], [2 /\/ 9], [0],
   [%], [Modulo (returns remainder of division)], [2 % 9], [2],
   [\*\*], [Exponent], [2 \*\* 9], [512],
+  [\@], [Matrix multiplication], [[ [1, 2], [3, 4] ] \@ [ [5, 6], [7, 8] ] ], [[[19, 22], [43, 50]]],
 )
+(You don't really have to worry about the last one, you almost never need it)
 
 But wait, there's more!\
 As well as arithmetic operators, there are also logical and bitwise operators. Let's have a look at these as well.\
@@ -387,10 +389,15 @@ Logical operators:
   [```python <```], [Less than], [```python 10 < 10```], [```python False```],
   [```python >=```], [Greater-than-or-equal-to], [```python 10 >= -1```], [```python True```],
   [```python <=```], [Less-than-or-equal-to], [```python 10 <= 10```], [```python True```],
+)
+#table(
+  columns: 4,
+  table.header[*Operator*][*Name*][*Example*][*Output*],
   [```python and```], [Logical AND], [```python True and False```], [```python False```],
   [```python or```], [Logical OR], [```python True or False```], [```python True```],
   [```python not```], [Logical NOT], [```python not (True and False)```], [```python True```],
 )
+
 All these values return a #gls("bool") (True or False). \
 The last three are slightly different so I'll go over them: \
 The `and` compares two #gls("bool") expressions, and returns `True` if they are both True. \
@@ -496,7 +503,7 @@ Therefore ```python age = 50``` works and ```python 50 = age``` doesn't.\
 If you're wondering why this is and how it's weird, this is discussed much later in my functional section #link(<functional-chapter>)[(link here)] that explains an alternative paradigm. However what is shown above works in procedural/OOP/imperative languages, which is what most python is. ]
 )
 
-Now, since we assign #glspl("var"), for calculations we can use #glspl("var")instead of actual values. Here's an example:
+Now, since we assign #glspl("var"), for calculations we can use #glspl("var") instead of actual values. Here's an example:
 ```python
 length = 13.6 
 
@@ -543,16 +550,18 @@ Which is exactly the same as the previous, but it reads a bit nicer. This works 
     b -= 1
     c *= 5
     d /= 5
+    e **= 8
 
-    e &= 2
-    f |= 10
-    g ^= a
-    h ~= e
-    i <<= 1
-    j >>= 1
+    f &= 2
+    g |= 10
+    h ^= a
+    i ~= e
+    j <<= 1
+    k >>= 1
  ```
 This is an example of #gls("syn-sug")]
 )
+
 
 == Summary exercises
 === Ex1
@@ -1134,6 +1143,20 @@ Example:\
 if getkey(user) is not None:
     return
 ```
+
+#tip(
+    title: [Walrus operator],
+    content: [Suppose you wanted to write this:\
+```python
+    line = input("enter string: ")
+    if line == "quit":
+        break
+ ``` But this feels a bit unnecessarily verbose, so there's actually a shorthand to assign and immediately use. This is using the `:=` operator, and it's used like this:\
+```python
+    if (line := input("enter string: ") != "quit"):
+        exit()
+ ``` (It's called this because it kind of looks like a walrus' face)]
+)
 
 === Using `match/case`
 
@@ -3538,7 +3561,16 @@ Result: Success for task 3
   [/\/], [Integer division (returns floored quotient)], [2 /\/ 9], [0],
   [%], [Modulo (returns remainder of division)], [2 % 9], [2],
   [\*\*], [Exponent], [2 \*\* 9], [512],
+  [\@], [Matrix multiplication], [[ [1, 2], [3, 4] ] \@ [ [5, 6], [7, 8] ] ], [[[19, 22], [43, 50]]],
 )
+
+#table(
+  columns: 4,
+  table.header[*Operator*][*Name*][*Example*][*Output*],
+  [```python =```], [Assignment], [```python architecture == "x86_64"```], [N/A],
+  [```python := ```], [Walrus], [```python print( x := 3 )```], [3],
+)
+
 
 #table(
   columns: 4,
@@ -3548,6 +3580,13 @@ Result: Success for task 3
   [```python <```], [Less than], [```python 10 < 10```], [```python False```],
   [```python >=```], [Greater-than-or-equal-to], [```python 10 >= -1```], [```python True```],
   [```python <=```], [Less-than-or-equal-to], [```python 10 <= 10```], [```python True```],
+)
+#table(
+  columns: 4,
+  table.header[*Operator*][*Name*][*Example*][*Output*],
+  [```python and```], [Logical AND], [```python True and False```], [```python False```],
+  [```python or```], [Logical OR], [```python True or False```], [```python True```],
+  [```python not```], [Logical NOT], [```python not (True and False)```], [```python True```],
 )
 
 #table(
