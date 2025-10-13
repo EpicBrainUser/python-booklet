@@ -1,4 +1,4 @@
-#import "@preview/glossarium:0.5.4": register-glossary, make-glossary, print-glossary, gls, glspl
+#import "@preview/glossarium:0.5.9": register-glossary, make-glossary, print-glossary, gls, glspl, Gls, Glspl
 
 #import "lib/glossary.typ": entries
 
@@ -444,7 +444,7 @@ int main() {
 // TBA
 
 
-= Variables
+= #Glspl("var")
 == What is a variable? 
 A #gls("var") is a crucial part of programming in any language, and is a part of #gls("mem") for storing data in a program. \ \
 In actuality, a #gls("var") is a symbolic identifier bound to a mutable reference that stores an #gls("obj") or value in #gls("mem"). \You can think of a #gls("var") as a named container for a type of data. Technically it functions as a named #gls("ptr") to a #gls("mem") location where data is stored, enabling indirect manipulation of the underlying value through the identifier.\ \
@@ -579,9 +579,9 @@ This is an example of #gls("syn-sug")]
 
 === Ex2
 #exercise(
-    title: [3.2: Swap variables],
+    title: [3.2: Swap #glspl("var")],
     content: [
-        Start with two variables:\
+        Start with two #glspl("var"):\
         ```python a = 5b = 10```\
         Print them to the screen. \
         Then swap their values, so that a becomes 10 and b becomes 5.\
@@ -620,7 +620,7 @@ Python doesn't have the `char` data type, but many languages, including OCR refe
 - `.startswith(char)`   returns a #gls("bool") telling you whether it starts with the specified character
 - `.endswith(char)`   returns a #gls("bool") telling you whether it ends with the specified character
 - `.split(char)` splits your string into a list based on the given deliminator you passed in
-- `.format` allows for injecting variables into lists (shown below)
+- `.format` allows for injecting #glspl("var") into lists (shown below)
 - `.isdigit` returns True or False depending if only digits are in the string
 
 === String operations \
@@ -888,7 +888,7 @@ my_tuple = (0,)*10
 shorthand, you always have to put the comma after the digit in the brackets, (as shown above) because otherwise it will be interpreted as normal brackets (which mean order of operation).]
 )
 
-Since tuples are immutable, you can't append, extend or add them, but you can slice them, which returns a new tuple back to you.\
+Since tuples are #gls("imu"), you can't append, extend or add them, but you can slice them, which returns a new tuple back to you.\
 \
 The main advantages of tuples over lists is that you know that they won't change in your program, and they can be used if you need a hashable collection.
 
@@ -931,7 +931,7 @@ del people_to_ages["Adam"]
 #note(
   title: [Note: Keys must be hashable],
   content: [When making a dictionary you can set anything as the value for anything, but you have to have the `key` be hashable.\
-In python, any immutable type is hashable, so: ints, floats, strings, booleans and tuples are all hashable as they are immutable.\
+In python, any #gls("imu") type is hashable, so: ints, floats, strings, booleans and tuples are all hashable as they are #gls("imu").\
 You cannot use lists, sets or other dictionaries as keys.]
 )
 
@@ -995,8 +995,8 @@ This works exactly the same way as the `.find` method or a normal search, but it
 
 #note(
   title: [Mutability of data types],
-  content: [Some data types like lists and dictionaries are mutable, and this makes sense, if you change the object (like appending a value to a list) it actually changes the value. However this isn't fully true with all data types. Here's a list of mutable and immutable objects:\
-*Immutable*
+  content: [Some data types like lists and dictionaries are mutable, and this makes sense, if you change the object (like appending a value to a list) it actually changes the value. However this isn't fully true with all data types. Here's a list of mutable and #gls("imu") #glspl("obj"):\
+*#Gls("imu")*
 - Strings
 - Integers
 - Floats
@@ -1007,7 +1007,7 @@ This works exactly the same way as the `.find` method or a normal search, but it
 - Lists
 - Sets
 - Dictionaries
-What this means for you is that if you wanted to have a function that uses a list but doesn't change it, you need to create a slice of it, because, as we will see later, python holds the memory address of variables, not values, which means if you were to try to make a copy of a list, like so: \
+What this means for you is that if you wanted to have a function that uses a list but doesn't change it, you need to create a slice of it, because, as we will see later, python holds the memory address of #glspl("var"), not values, which means if you were to try to make a copy of a list, like so: \
 ```python list_copy = list``` \
 they would point to the same address in memory. Really you would need to do either this: \
 ```python list_copy = list[:]``` \
@@ -1529,7 +1529,7 @@ This means the program raises this error and crashes if you try to call this fun
 
 == Scope
 
-All languages have this as an concept, and it tells you where a variable or object is valid for, and can be used. Previously we've defined all our objects and variables and code in something known as `global` scope, meaning it is valid everywhere in the script. When you define a function you create a `local` scope, meaning something that you create in the function doesn't exist outside the function as you destroy the scope and any objects when the function returns. \
+All languages have this as an concept, and it tells you where a variable or object is valid for, and can be used. Previously we've defined all our #glspl("obj") and #glspl("var") and code in something known as `global` scope, meaning it is valid everywhere in the script. When you define a function you create a `local` scope, meaning something that you create in the function doesn't exist outside the function as you destroy the scope and any #glspl("obj") when the function returns. \
 Local scope takes precedence over global, or nonlocal scope. Now let's demonstrate all this: \
 ```python
 x = 21
@@ -1556,7 +1556,7 @@ def func():
 print(x)
 ```
 This will print 21, 0, 0 as you modified the global variable by using the ```python global``` keyword. \
-Now let's look at local variables: \
+Now let's look at local #glspl("var"): \
 ```python
 x = 21
 def func():
@@ -1565,7 +1565,7 @@ def func():
 print(x)
 ```
 This will print 0, 21 as you made a local variable with the same name as a global variable, but didn't change the global variable. \
-But what if you have nested functions? This is known as `external scope` and you need to use the `nonlocal` keyword to access variables that are external to the scope but not global. Otherwise this works the same way that global does: \
+But what if you have nested functions? This is known as `external scope` and you need to use the `nonlocal` keyword to access #glspl("var") that are external to the scope but not global. Otherwise this works the same way that global does: \
 ```python
 def func():
     x = 21
@@ -1574,7 +1574,7 @@ def func():
         print(x)
 ```
 \
-This doesn't work the same way with mutable objects, which behave a bit different as python's variables all hold memory addresses not values. You'll see how this works shortly.
+This doesn't work the same way with mutable #glspl("obj"), which behave a bit different as python's #glspl("var") all hold memory addresses not values. You'll see how this works shortly.
 
 
 == Arguments and parameters
@@ -1674,7 +1674,7 @@ def divide(dividend, divisor):
 Under the hood python actually returns a tuple of these values, like this: ```python return (return, remainder)```
 // The return statement doesn't have to have the same names as the variables it's returning.\
 \
-Then when you call the function, you can either store the returned values in variables like this:\
+Then when you call the function, you can either store the returned values in #glspl("var") like this:\
 ```python
 result, remainder = divide(65, 7)
 ```
@@ -1685,14 +1685,14 @@ You can also pass the returned values to a function like this:\
 ```python
 print("The result of the division was: ", divide(65, 7)
 ```
-This returns a tuple with the two values. If you wanted them separately, you would have to pass them into variables to unpack the tuple, as shown previously.\
+This returns a tuple with the two values. If you wanted them separately, you would have to pass them into #glspl("var") to unpack the tuple, as shown previously.\
 
 Another example of passing the returned value to a function:\
 ```python
 print(f"6 + 7 is: {add(6, 7)}, and that's the total!")
 ```
 #note(
-  title: [Note: Python uses _Pass by Object Reference_],
+  title: [Note: Python uses _Pass by #Gls("obj") Reference_],
   content: [What this means is that if the object you give the function is mutable, any change you make to said object in the function is reflected outside the function as well. This is because they actually point to the same object in memory. ]
 )
 
@@ -2095,7 +2095,7 @@ def function(a):
 
 ```
 0. Using descriptive names \
-    This might be really really obvious but using good, descriptive, clear and mostly short names for functions variables and classes is really important to keep your code easy to read and use. Here we had to explain what the function did and what the parameter was. Instead if we had written this: \
+    This might be really really obvious but using good, descriptive, clear and mostly short names for functions #glspl("var") and #glspl("cls") is really important to keep your code easy to read and use. Here we had to explain what the function did and what the parameter was. Instead if we had written this: \
 ```python
 def find_circumference(diameter):
     # 3.141 is pi, which we multiply the diameter to get the circumference
@@ -2104,7 +2104,7 @@ def find_circumference(diameter):
 Now we don't need the two extra comments.
 
 
-1. Using variables to avoid #glspl("magic-num") \
+1. Using #glspl("var") to avoid #glspl("magic-num") \
     A #gls("magic-num") is a number that isn't clear what is to the reader. In the above function, there is this $3.141$ which is kinda just floating around, while this is rather simplistic and we can all recognise it as $pi$ it still may be unclear, and makes the code harder to follow. \
 To make this better, we can define it as a constant: \
 ```python
@@ -2119,7 +2119,7 @@ import math
 def find_circumference(diameter):
     return diameter * math.pi
 ```
-This was the point I made in chapter 3 when I introduced variables.
+This was the point I made in chapter 3 when I introduced #glspl("var").
 
 2. Using types instead of comments \
     Suppose we had this function here:
@@ -2363,7 +2363,7 @@ class MyCustomError(Exception):
 ```
 Here we made a custom class that makes an error object inheriting from the `Exception` class. \
 This now introduces the `MyCustomError` as a valid error that can be raised. You can supply a message to it as well, which will allow you to catch and do something with it. \
-You can also create instances of this class by assigning it to variables like this: \
+You can also create instances of this class by assigning it to #glspl("var") like this: \
 ```python simple_message = MyCustomError("hi, you've raised an exception")```
 And then raising the error like this: \
 ```python
@@ -2480,10 +2480,10 @@ If you don't want to constantly write out `matplotlib.pyplot.graph` you can alia
 
 = Reading/writing to/from external files
 
-As of now, you've only stored data in RAM in variables, which means that when the program terminates the data is lost. If we want data to be stored persistently, we need to write to external files and save them to the disk, for example, you may want to store logins and usernames or user data in an external file.\
+As of now, you've only stored data in RAM in #glspl("var"), which means that when the program terminates the data is lost. If we want data to be stored persistently, we need to write to external files and save them to the disk, for example, you may want to store logins and usernames or user data in an external file.\
 Here's how python handles this:\
 
-Python as an inbuilt function for this, called `open`.  The way this works is it makes a file object that you can use, and operate on. More on objects later though. This allows you to open a file, with a mode. \
+Python as an inbuilt function for this, called `open`.  The way this works is it makes a file object that you can use, and operate on. More on #glspl("obj") later though. This allows you to open a file, with a mode. \
 Here are the valid modes you can use, and what they do:\
 #table(
   columns: 2,
@@ -2578,8 +2578,8 @@ x: int = 12
 print(type(x))
 ```
 This gives us: ```python <class 'int'>```\
-What this means, is that `x` (the variable name) is an object (you can tell as it says 'class'), of type `int`. `int` is a built-in data type into python, one of the many we explored in chapter 4, and all those mentioned there are really classes, which are blueprints for objects.\
-Not just variables and data are objects, everything in python is an object. Here's a function:\
+What this means, is that `x` (the variable name) is an object (you can tell as it says 'class'), of type `int`. `int` is a built-in data type into python, one of the many we explored in chapter 4, and all those mentioned there are really #glspl("cls"), which are blueprints for #glspl("obj").\
+Not just #glspl("var") and data are #glspl("obj"), everything in python is an object. Here's a function:\
 ```python
 def simple_function() -> None:
     pass
@@ -2589,9 +2589,9 @@ print(type(simple_function))
 We'll get ```python <class> 'function'>```.\
 This doesn't mean that the `simple_function` is a data type per se, but rather that it's an object, which is an instance of a class. A class is like a blueprint for an object.\
 \
-You may have noticed that I've previously mentioned methods for objects - such as the `.add` option for integers.\
-What this really is, is a method in the class `int`. Methods are basically functions that are in classes.\
-Alright, let's start making our own classes, with this example we are making a simple maths object:\
+You may have noticed that I've previously mentioned methods for #glspl("obj") - such as the `.add` option for integers.\
+What this really is, is a method in the class `int`. Methods are basically functions that are in #glspl("cls").\
+Alright, let's start making our own #glspl("cls"), with this example we are making a simple maths object:\
 - First start with the `class` keyword, followed by a name (PascalCase for the name), and the `:` \
 ```python class ArithmeticClass:```
 - Next we have everything in the class indented, and we will start by defining an `__init__` constructor method. This is a function that runs every time you initialise the class.\
@@ -2634,7 +2634,7 @@ print(a)
 ```
 The `__str__` method only returns a string, so you need to wrap it in the `str()` if it's not a string.\ \
 
-The only point of `__init__` is to initialise the class the variables, not to do anything else. Hence the other dunder methods - such as `__str__` for string representation.\
+The only point of `__init__` is to initialise the class the #glspl("var"), not to do anything else. Hence the other dunder methods - such as `__str__` for string representation.\
 \
 Any dunder method (double underscore), sometimes called a magic method is a method that does something special to python, for example there's the `__len__` method for defining a result when ran in the `len` function. 
 
@@ -2695,9 +2695,9 @@ class ArithmeticClass:
 
 == Inheritance
 
-The idea behind inheritance is that it allows you to more easily write similar classes by abstracting them to a 'parent' class and the 'child' classes inherit their properties, state, and behaviours. Then in the child class you can add separate functionality without having to copy and paste the whole parent class. \
+The idea behind inheritance is that it allows you to more easily write similar #glspl("cls") by abstracting them to a 'parent' class and the 'child' #glspl("cls") inherit their properties, state, and behaviours. Then in the child class you can add separate functionality without having to copy and paste the whole parent class. \
 For example (and for this example I'm going to abstract the ideas, so it may not actually be a viable option if you were going to try build this), if you were building a city simulation game, and in the city there are many buildings.\
-Without inheritance, you might make a class for a school, one for a home, one for a skyscraper and so on; but all these classes have lots of things in common, like similar materials, having doors and windows, and structural elements. \
+Without inheritance, you might make a class for a school, one for a home, one for a skyscraper and so on; but all these #glspl("cls") have lots of things in common, like similar materials, having doors and windows, and structural elements. \
 Here's some representative pseudocode:\
 ```
 class SkyScraper {
@@ -2788,12 +2788,12 @@ class House(Building) {
 }
 ```
 
-Here we reused a bunch of things between our classes, like the cost and the space, just changing what was unique to the class.
+Here we reused a bunch of things between our #glspl("cls"), like the cost and the space, just changing what was unique to the class.
 
 #pagebreak()
 
 == Dataclasses
-In a lot of other languages, there's a way to group data together neatly in something called a 'struct' but here in python that doesn't exist, but we do have classes, and a special kind of class called a dataclass, can be very powerful and probably the best way to pass data around in python.
+In a lot of other languages, there's a way to group data together neatly in something called a 'struct' but here in python that doesn't exist, but we do have #glspl("cls"), and a special kind of class called a dataclass, can be very powerful and probably the best way to pass data around in python.
 Here's an example:\
 ```python
 from dataclasses import dataclass
@@ -2833,7 +2833,7 @@ class User:
     hash: str = ""
 ```
 
-Now if you initialise without the email or hash fields, we get an empty string. Note this only works for immutable values.
+Now if you initialise without the email or hash fields, we get an empty string. Note this only works for #gls("imu") values.
 \
 You can also modify some values and how the dataclass behaves when you pass in parameters when you use the wrapper. Here are some useful ways to change how it behaves:\
 
@@ -2883,11 +2883,11 @@ Try to follow along but if you find it doesn't make any sense then don't worry t
 Python being a multi-paradigm language, it has the option to also write in a more functional way.\
 What does this mean?\
 The idea behind functional programming and languages like F\#, Haskell, Elixir etc is that:
-- The only abstraction allowed is a function (no classes, objects, variables, only functions)
+- The only abstraction allowed is a function (no #glspl("cls"), #glspl("obj"), #glspl("var"), only functions)
   - Thus functions are treated a little bit differently, so functions are 'first class citizens' meaning they are treated like anything else, they can be passed around as anything else, and be returned from other functions, and taken in as parameters.
-  - Functions are pure, meaning that they have no side effects, don't mutate any variables, and always take one input and return one output.
+  - Functions are pure, meaning that they have no side effects, don't mutate any #glspl("var"), and always take one input and return one output.
 - There is no state. 
-  - State is anything that is stored in the program at runtime and changes. This means that all variables are immutable - meaning when a value is set it cannot change. In fact, variables are just names, rather than what we traditionally think of as a variable. 
+  - State is anything that is stored in the program at runtime and changes. This means that all #glspl("var") are #gls("imu") - meaning when a value is set it cannot change. In fact, #glspl("var") are just names, rather than what we traditionally think of as a variable. 
 \
 \
 Thinking in a functional way, functions are much more like the functions you get in maths, which are known as pure functions. This means that they have no side effects, always take a single input and always return a single output. \
@@ -3014,7 +3014,7 @@ Even though it's not as 'functional' as the previous.
 
 
 == Recursion (part 2)
-Since no variables can be mutated, we instead use recursion, which is when functions call themselves, to get a kind of iteration. \
+Since no #glspl("var") can be mutated, we instead use recursion, which is when functions call themselves, to get a kind of iteration. \
 
 As I mentioned earlier, recursion when not used properly is risky as it can go on forever filling up the call stack until it breaks your program.\
 To avoid this, we must always have a termination in the recursion, with a terminal case:\
@@ -3091,7 +3091,7 @@ i = 0
 while i<10:
     i += 1
 ```
-To turn this into a recursive loop, which is used in functional paradigms, where all variables are immutable, we need to take care of this mutation, as it's not allowed to change variables.\
+To turn this into a recursive loop, which is used in functional paradigms, where all #glspl("var") are #gls("imu"), we need to take care of this mutation, as it's not allowed to change #glspl("var").\
 In functional code, all you have is a function, so let's first take out this main body of our C into its own function, like so:\
 ```c
 void print_index(int* arr, int index)
@@ -3187,7 +3187,7 @@ This function now calls itself modifying the input until the value is 1, and the
 === Ex2
 #exercise(
     title: [Binary search],
-    content: [Using recursion, so no mutation of variables, write a binary search function, where given a list and an item will return a #gls("bool") depending on whether it was found. Binary search cuts in half repeatedly until the item is found, and only works for sorted data. \
+    content: [Using recursion, so no mutation of #glspl("var"), write a binary search function, where given a list and an item will return a #gls("bool") depending on whether it was found. Binary search cuts in half repeatedly until the item is found, and only works for sorted data. \
 This is an ideal problem to solve with recursion, as it can easily be broken down, and there are clear cases. Try to apply what you've learned.]
 )
 

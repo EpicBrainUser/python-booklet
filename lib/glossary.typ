@@ -1,4 +1,4 @@
-#import "@preview/glossarium:0.5.4": make-glossary, register-glossary
+#import "@preview/glossarium:0.5.9": make-glossary, register-glossary
 
 // Define all glossary entries
 #let entries = (
@@ -97,7 +97,7 @@
     key: "magic-num",
     short: "magic number",
     // long: "magic number",
-    longplural: "magic numbers",
+    plural: "magic numbers",
     description: "A number that has a special or particular meaning that isn't make clear to the reader, for example writing `return diameter * 3.141592` inside a find_circumference(diamter) function, makes it so that 3.141592 is unclear, unless you recognise it as pi. It is often better to put it as a constant or variable in the program, or define it as a macro."
   )
 )
