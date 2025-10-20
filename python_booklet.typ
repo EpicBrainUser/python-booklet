@@ -3571,7 +3571,7 @@ Result: Success for task 3
 #table(
   columns: 4,
   table.header[*Operator*][*Name*][*Example*][*Output*],
-  [```python =```], [Assignment], [```python architecture = "x86_64"```], [N/A],
+  [```python =```], [Assignment], [```python architecture = "x86_64"```], [],
   [```python := ```], [Walrus], [```python print( x := 3 )```], [3],
 )
 
