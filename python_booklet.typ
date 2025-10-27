@@ -2507,7 +2507,9 @@ If you don't want to constantly write out `matplotlib.pyplot.graph` you can alia
 
 = Reading/writing to/from external files
 
-As of now, you've only stored data in RAM in #glspl("var"), which means that when the program terminates the data is lost. If we want data to be stored persistently, we need to write to external files and save them to the disk, for example, you may want to store logins and usernames or user data in an external file.\
+As of now, you've only stored data in #gls("mem")#footnote[Most often this is actually CPU cache, and when machine code executes on the CPU, parameters from functions are most likely passed in directly into the CPU registers (Memory Data Register in Von Neumann Architecture)]
+ in #glspl("var"), which means that when the program terminates the data is lost. If we want data to be stored persistently, we need to write to external files and save them to the disk, for example, you may want to store logins and usernames or user data in an external file.\
+
 Here's how python handles this:\
 
 Python as an inbuilt function for this, called `open`.  The way this works is it makes a file object that you can use, and operate on. More on #glspl("obj") later though. This allows you to open a file, with a mode. \
@@ -2596,6 +2598,9 @@ The `.json` format is pretty helpful for reading and writing data to files in a 
     title: [Unfinished],
     content: [I still have yet to add the exercises here, at some point I will update this.]
 )
+
+
+
 
 = Object Oriented Programming in Python <oop-ch>
 
