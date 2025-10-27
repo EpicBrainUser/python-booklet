@@ -92,13 +92,19 @@
     long: "boolean value",
     description: "A value that can only hold one of two values, True or False. This was named after George Boole, coming from boolean algebra."
   ),
-
   (
     key: "magic-num",
     short: "magic number",
     // long: "magic number",
     plural: "magic numbers",
     description: "A number that has a special or particular meaning that isn't make clear to the reader, for example writing `return diameter * 3.141592` inside a find_circumference(diamter) function, makes it so that 3.141592 is unclear, unless you recognise it as pi. It is often better to put it as a constant or variable in the program, or define it as a macro."
+  ),
+
+  (
+    key: "token",
+    short: "token",
+    long: "lexical token",
+    description: "A lexical token is a discreet part of the language, a string with an assigned meaning. It has a name and a value. For example you can have keywords, such as 'def', 'class', 'return', but also punctuation like parenthesis or ':', or operators, whitespace, identifiers and literals"
   )
 )
 

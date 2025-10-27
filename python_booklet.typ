@@ -2267,17 +2267,63 @@ def func():
 )
 
 = Error handling
-In python, there are two kinds of errors:\
+In most high-level languages #footnote[Here I mean imperative Object Oriented high-level languages, like C++ and Java, but excluding things like Haskell (functional) or Zig (Zig has its own error system)], there are several kinds of errors:\
 - Syntax errors:\
-  _Syntax_ is the rules of a language, so a syntax error simply means you didn't write the code correctly - in the sense that you violated rules that python has to follow.\
-  A common syntax error is a misspelled keyword, such as writing `Print` instead of `print`, or missing a close bracket.\  
+  _Syntax_ is the rules of a language, so a syntax error simply means you didn't write the code correctly -- in the sense that you violated rules that python has to follow.\
+  For example you missed a `:` after a scope definition like an `if` statement, or you missed a parenthesis or made a spelling error. Here you broke the grammar rules
   In this case Cpython (the interpreter) will point to you where the error was caught in compiling. 
   #note(
     title: [Note: How is python translated?],
     content: [So far I've told you that python is interpreted, which is true - you don't compile python directly to machine code.\
   However, python is actually compiled to _bytecode_ which is then executed by the python virtual machine. ]
   )
+- Logical/Semantic:\
+    This is where the code _could_ be correct as grammatically it is, but it either causes a runtime crash, or is caught by python or via exceptions (explained below). Here's an example of code that runs but gives an unexpected output:
+```python
+def average_pair(a: int , b: int) -> float:
+    return a + b / 2
+```
+Here when the #glspl("token") get parsed by the language compiler, the precedence of `/` is greater than that of `+` due to the order of operations, so it is read in like this: \
+```python return a + (b / 2)``` \
+Which is not the intention, as it yields incorrect results. What we wanted is this: ```python return (a + b) / 2```, so we have to manually put this in. \
+None of these violated the rules or grammar of the language, but were nonetheless incorrect. I cover logical errors and testing more later in in chapter 15:  #link(<testing_chapter>)[Writing tests]. \
+Earlier I mentioned that a spelling error is a syntax error, but often it is actually a semantic error. Here's an example: \
+```python
+# Print a greeting to the reader
+pront("Greetings, reader!")
+```
+Clearly there is a spelling error, but this is actually a logical/semantic error as this _could_ be right, but the language parser doesn't find a function called `pront` so fails and gives us this crash: \
+```
+~/code/python via  v3.13.9 took 8s 
+❯ python test-errors.py 
+Traceback (most recent call last):
+  File "/home/larry/code/python/test-errors.py", line 1, in <module>
+    pront("Greetings, reader!")
+    ^^^^^
+NameError: name 'pront' is not defined. Did you mean: 'print'?
+
+```
+This is different from a syntax error which may be missing a quote pair like this: \
+
+```
+~/code/python via  v3.13.9 took 9s 
+❯ python test-errors.py  
+  File "/home/larry/code/python/test-errors.py", line 1
+    print("Greetings!)
+          ^
+SyntaxError: unterminated string literal (detected at line 1)
+
+```
+The reason that the first case could work is because we have a valid function call, just to a function `pront` that doesn't exist. We can define this function like so: \
+```python
+def pront(*args):
+    print(*args)
+```
+and now our code runs just fine. I'll prove this further with exceptions later on. 
+
+
 - Exceptions:\
+  This is a high-level error feature of python, that allows you to catch semantic and logical errors from the language. \
   As the python documentation puts it:\
   #quote(attribution: [ #link("https://docs.python.org/3/tutorial/errors.html")[Python Docs] ])[
     "Even if a statement or expression is syntactically correct, it may cause an error when an attempt is made to execute it. Errors detected during execution are called exceptions and are not unconditionally fatal: you will soon learn how to handle them in Python programs."
@@ -2333,16 +2379,19 @@ def divide(dividend, divisor):
 ]
 )
 
-Then you might want some cleanup in the try/except clause, where you have code to run no matter what error occurred - in actual examples of real code, this is often things like closing off connections to databases and closing files.\
+Then you might want some cleanup in the try/except clause, where you have code to run no matter what error occurred - in actual examples of real code, this is often things like closing off connections to databases and closing files (but for this just use a context manager (```python with```)).\
 To do this use the `finally` keyword at the end of your clause like this:\
 ```python
 try:
-      # Some code
-try: 
-      # Some more code you just want to try
+      # Some code that might fail
+except ValueError:
+    ...
+except NameError:
+    ...
 except Exception:
       # As many exceptions as you want to try to catch, you 
       # can have as many of these blocks as you want
+      # 'Exception' is a 'catch all' solution you don't usually want
 finally:
       # A single finally block here
 ```
@@ -2379,6 +2428,18 @@ def main():
 \
 Which just outputs:\
 ``` Age can't be negative!```
+
+== Catching typos
+As I previously mentioned you can catch spelling mistakes if the python grammar is not the problem. The specific name of for this is 'NameError'. Knowing this let's write a try/except block to catch this:\
+```python
+try: 
+    user_value = imput("Greetings: ")
+except NameError as e:
+    print(e)
+```
+Which will output: \
+`name 'imput' is not defined` \
+However I would suggest to not just run your whole code inside a massive try/except block to catch typos, it makes more sense to let the runtime crash happen so it tells you exactly what to fix and where. This ends up being more helpful in fixing programs and just generally writing code. 
 
 == Custom errors
 At some point you may want to write your own errors to be raised and caught. For this you need to define a custom error #gls("cls"), which is part of the object oriented part of python, but that's covered in chapter 13 #link(<oop-ch>)[(link here)]. For now, just try to follow along: \
@@ -3233,8 +3294,8 @@ This is an ideal problem to solve with recursion, as it can easily be broken dow
 // TBA: Give an example
 
 
-= Testing
-So far we've just been writing code and hoping that it works, then running it and testing it 'interactively' that way. This isn't ideal, and you can't see just from looking at code whether it does what you want it to. Instead, I'll introduce you to how to write code to test your other code. \
+= Testing  <testing_chapter>
+So far we've just been writing code and hoping that it works, then running it and testing it 'interactively' that way. This isn't ideal, and you can't see just from looking at code whether it does what you want it to. Instead, I'll introduce you to how to write code to test your other code. This is also crucial for finding logical and semantic errors that otherwise go under the radar, as I showed in my Errors chapter. \
 \
 
 == A very simple example
