@@ -53,7 +53,7 @@
   ),
 
   (
-    key: "stack",
+    key: "call stack",
     short: "stack",
     long: "call stack",
     description: "In computer science, a call stack is a LIFO (Last-In-First-Out) stack data structure that tracks active subroutine invocations during program execution. It manages control flow by storing stack frames (activation records) containing:
@@ -64,21 +64,29 @@
 
     Parameters (arguments passed to the subroutine)
 
-    Bookkeeping data (e.g., saved registers, frame pointers)"
+    Bookkeeping data (e.g., saved registers, frame pointers)
+
+    When a recursive function causes a 'stack overflow', it is this stack that ran out memory for 'frames' being pushed to it"
+  ),
+  (
+    key: "stack memory",
+    short: "stack",
+    long: "stack memory",
+    description: "This is a high-speed part of memory on CPU that works as a LIFO data structure, and where the memory usage must be determined at compile time, therefore only immutable data can be stored here. "
   ),
 
   (
     key: "heap",
     short: "heap",
     long: "memory heap",
-    description: "In computer science, a memory heap is a region of process memory reserved for dynamic allocation of data structures whose size and lifetime are determined at runtime. It operates as a pool of unstructured memory managed through explicit programming interfaces rather than automatic scope-based mechanisms."
+    description: "A memory heap is a region of process memory reserved for dynamic allocation of data structures whose size and lifetime are determined at runtime. It operates as a pool of unstructured memory managed through explicit programming interfaces rather than automatic scope-based mechanisms. Often you'll use the heap when the stack is too small or you need an amount of memory only known at runtime. "
   ),
 
   (
     key: "mem",
     short: "memory",
     long: "main memory",
-    description: "Computer memory stores data for immediate use by the computer. This is referring to RAM - Random Access Memory."
+    description: "Computer memory stores data for immediate use by the computer. This is referring to RAM -- Random Access Memory, or CPU cache or even registers. 'Memory' refers to the volotile memory used by a computer when a program executes on the CPU. "
   ),
   (
     key: "syn-sug",
@@ -105,6 +113,16 @@
     short: "token",
     long: "lexical token",
     description: "A lexical token is a discreet part of the language, a string with an assigned meaning. It has a name and a value. For example you can have keywords, such as 'def', 'class', 'return', but also punctuation like parenthesis or ':', or operators, whitespace, identifiers and literals"
+  ),
+  (
+    key: "parameter",
+    short: "parameter",
+    description: "In a function, the variables put in as 'placeholders' to be replaced by values when the function is called, e.g def add(x: int, y: int) -> int: return x + y, here x and y are the parameters in the function. This is also known as a 'formal argument'. "
+  ),
+  (
+    key: "arg",
+    short: "argument",
+    description: "In a function call, the values put in place to substitue the parameter placeholders are called arguments, e.g sum_result = add(6 + 7), here 6 and 7 are the arguments given to the function add. This is referred to as the 'actual argument'. "
   )
 )
 

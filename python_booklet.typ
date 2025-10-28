@@ -265,7 +265,7 @@ Also you can go into multiple subdirectories at once by chaining them together l
 Here I also used the `~` shorthand for your home folder. You can check the environment variable for what it is by running:\
 ```sh echo $HOME```\
 which will give you something like ```/Users/John Doe/``` or on Linux ```/home/John Doe```.\
-To go back one directory (the 'parent' directory), you use ```sh cd ..```. Interestingly the '.' directory is the current one, and is used most commonly to run scripts, with this './' syntax. To go to the home directory run ```sh cd ``` without any arguments. 
+To go back one directory (the 'parent' directory), you use ```sh cd ..```. Interestingly the '.' directory is the current one, and is used most commonly to run scripts, with this './' syntax. To go to the home directory run ```sh cd ``` without any #glspl("arg"). 
 
 
 #tip(
@@ -459,10 +459,10 @@ In actuality, a #gls("var") is a symbolic identifier bound to a mutable referenc
 Let's break down what that means: \
 A #gls("var") is just a name that references something - usually an #gls("obj") as python is an #gls("oop") language. This means that you use #glspl("cls") to make #glspl("obj") of certain data types, which can be both built in and custom.
 It holds the #gls("mem") address which 'points' to the #gls("mem") where data is actually stored, hence the name #gls("ptr").\
-Because of this, python doesn't actually have #glspl("var"), just a name that stores a memory address. This later helps explain some things such as how functions pass parameters, and data mutation.
+Because of this, python doesn't actually have #glspl("var"), just a name that stores a memory address. This later helps explain some things such as how functions pass #glspl("parameter"), and data mutation.
 
-There are also constants, which are in almost all respects the same as #glspl("var"), but they are #gls("imu") - which means that their value cannot change throughout the program.\
-// This can be benefitial as the compiler knows the size of it at runtime, so they are #gls("mem") safe to use in the #gls("stack"), unlike #glspl("var"), which are usually stored in the #gls("heap").
+There are also constants, which are in almost all respects the same as #glspl("var"), but they are #gls("imu") -- which means that their value cannot change throughout the program.\
+This can be beneficial as the compiler knows the size of it at runtime, so they are #gls("mem") safe to use in the #gls("stack memory"), unlike #glspl("var"), which are usually stored in the #gls("heap").
 // \ \
 Therefore #glspl("var") and constants must be stored in *#gls("mem")* when the program is running.
 
@@ -845,8 +845,8 @@ Indexable means that each value has an index, and you can view and change via in
 Heterogeneous means it can hold mixed data types.
 
 === Common methods for lists:
-- `.append()` adds anything you pass as an argument in the brackets onto the end of the list
-- `.pop()` removes anything you pass as an argument in the brackets from the end of the list, and also returns that value
+- `.append()` adds anything you pass as an #gls("arg") in the brackets onto the end of the list
+- `.pop()` removes anything you pass as an #gls("arg") in the brackets from the end of the list, and also returns that value
 - `.extend([])` adds a list onto the end like append, the advantage being you can add more values in one go
 
 === Indexing in action
@@ -1260,7 +1260,7 @@ for i in range(10):
     print(i)
 ```
 This makes an iterable that ranges from 0 to 9.\
-`range()` also takes optional arguments, so here it takes a start index as well:
+`range()` also takes optional #glspl("arg"), so here it takes a start index as well:
 ```python
 for i in range(3, 10):
     print(i)
@@ -1436,18 +1436,18 @@ Let's quickly go over how to use a function: \
 # ---captured return value| |'6' and '7' are arguments
 #                         | | supplied in parentheses
 ```
-This is a function 'call'. A function call has a name#footnote[Well actually not all functions have names, anonymous functions called lambda functions don't, but that's covered in chatper 14], followed by parentheses, which can have arguments in them. The arguments are the real values you give the function when you call it. \
+This is a function 'call'. A function call has a name#footnote[Well actually not all functions have names, anonymous functions called lambda functions don't, but that's covered in chatper 14], followed by parentheses, which can have #glspl("arg") in them. The #glspl("arg") are the real values you give the function when you call it. \
 Here `value` is the thing returned by `cool_function_here` which is taken into a variable. Not all functions return values. I cover how to write your own functions in the next chapter, here I just show python's in-built functions that do useful things. \
 
 Python has a number of handy, in built functions -- which I will quickly go over. You have probably used some of these before.
 
 - `print`
 Function: Prints something to the console \
-Usage: Pass the thing you want to print in parentheses as an argument: ```python print("Hello")``` 
+Usage: Pass the thing you want to print in parentheses as an #gls("arg"): ```python print("Hello")``` 
 
 - `input`
-Function: Take input from standard input and returns it, and can be used to put into a #gls("var"), but also as a parameter for another function. \
-Usage: ```python var = input()```. Here `var` was the #gls("var") but you can put anything. It can be passed as a parameter like this:
+Function: Take input from standard input and returns it, and can be used to put into a #gls("var"), but also as a #gls("parameter") for another function. \
+Usage: ```python var = input()```. Here `var` was the #gls("var") but you can put anything. It can be passed as a #gls("parameter") like this:
 ```python
 >>> print(input("Please input something: "))
 Please input something: 3456
@@ -1457,7 +1457,7 @@ Here it was passed to `print`.
 \
 Note that the input function takes input as a string unless you cast it otherwise.
 
-Also you can put a string to be printed to standard output as a parameter to the input function in parentheses. 
+Also you can put a string to be printed to standard output as a #gls("parameter") to the input function in parentheses. 
 
 - `len` 
 Function: Returns the length of the thing that was passed into it\
@@ -1583,7 +1583,7 @@ This makes more sense after I cover Object Oriented programming in python in a l
 As seen in the previous chapter, python has in built functions, but we can also create our own.\
 A function is a self-contained block of code that do a specific task. It returns a value.
 
-Functions in python can take any number of input parameters, and return any number of values.\
+Functions in python can take any number of input #glspl("parameter"), and return any number of values.\
 
 == Defining functions
 
@@ -1592,7 +1592,7 @@ You define a function with the `def` keyword, like this:\
 def my_function():
     print("I'm in a function!")
 ```
-By default if there is no `return` statement at the end of a function it implicitly returns the `None` type, if you want to be extra explicit you can use `return` with no arguments or `return None`.\
+By default if there is no `return` statement at the end of a function it implicitly returns the `None` type, if you want to be extra explicit you can use `return` with no #glspl("arg") or `return None`.\
 \
 As we've seen before, python expects indented code after the `:`, and if you want to keep your function, you can use the `pass` keyword to have no other code there, like this:\
 ```python
@@ -1656,21 +1656,21 @@ def func():
 This doesn't work the same way with mutable #glspl("obj"), which behave a bit different as python's #glspl("var") all hold memory addresses not values. You'll see how this works shortly.
 
 
-== Arguments and parameters
-To avoid this annoying scope idea, we use parameters in our functions, and then when we call them we supply arguments. A parameter is like a placeholder variable that you use in the function, which isn't actually real until you call it with an argument. The argument is the real value that you give to the function, that replaces the parameter with a value. \
-When you define a function, you write in these placeholder parameters like so, and place them in parentheses like this. 
+== #Glspl("arg") and #glspl("parameter")
+To avoid this annoying scope idea, we use #glspl("parameter") in our functions, and then when we call them we supply #glspl("arg"). A #gls("parameter") is like a placeholder variable that you use in the function, which isn't actually real until you call it with an #gls("arg"). The #gls("arg") is the real value that you give to the function, that replaces the #gls("parameter") with a value. \
+When you define a function, you write in these placeholder #glspl("parameter") like so, and place them in parentheses like this. 
 ```python
 def greeting(name):
     print(f"Hello, {name}")
 ```
 Then later in your code you need to call this function like so:\
 ```python greeting(John)```\
-Here `John` was passed in as the name, and the function is called with parameter John taking the place of the argument `name`. \
+Here `John` was passed in as the name, and the function is called with #gls("parameter") John taking the place of the #gls("arg") `name`. \
 
 #note(
-  title: [Note: _Argument_ vs _Parameter_],
-  content: [A parameter is like a placeholder you put in your function when you define it.\ 
-An argument is the actual value you give the function when you call it.]
+  title: [Note: _#Gls("arg")_ vs _#Gls("parameter")_],
+  content: [A #gls("parameter") is like a placeholder you put in your function when you define it.\ 
+An #gls("arg") is the actual value you give the function when you call it.]
 )
 
 === Default values
@@ -1696,26 +1696,26 @@ print_items(list[0], list[1], list[2], list[3])
 
 We can also do this with star unpacking like this: \
 ```python print_items(*list)```\
-We can denote any number of normal arguments to a function like this in the declaration: \
+We can denote any number of normal #glspl("arg") to a function like this in the declaration: \
 ```python def print_items(*args)``` \
-Where `args` becomes a tuple of arguments. \
-We can place any 'normal' arguments before the `*args` like so:\
+Where `args` becomes a tuple of #glspl("arg"). \
+We can place any 'normal' #glspl("arg") before the `*args` like so:\
 ```python def print_items(p1, *args)```\
 
-==== Keyword arguments
-You can pass in arguments by name rather than position like so: \
+==== Keyword #glspl("arg")
+You can pass in #glspl("arg") by name rather than position like so: \
 
 ```python print_items(1, 2, 3, p2 = 4)``` \
 So long as the function has p2 in the declaration like so:\
 ```python def print_items(p1, *args, p2 = 4)```\
 
 #note(
-    title: [Argument order],
-    content: [Keyword arguments must come after any positional arguments, so this wouldn't work: \
+    title: [#Gls("arg") order],
+    content: [Keyword #glspl("arg") must come after any positional #glspl("arg"), so this wouldn't work: \
 ```python def print_items(p2 = 4, p1, *args)```]
 )
 
-You can unpack a dictionary into keyword arguments with the double star notation like this: \
+You can unpack a dictionary into keyword #glspl("arg") with the double star notation like this: \
 ```python
 def print_a_b(a, b):
     print(f"a: {a}")
@@ -1727,9 +1727,9 @@ print_a_b(**d)
 Which means the function call gets unpacked into: \
 ```python print_a_b(a = 0, b = 1) ```
 
-You can also do the reverse of this by specifying that you need keyword arguments in the function declaration like this: \
+You can also do the reverse of this by specifying that you need keyword #glspl("arg") in the function declaration like this: \
 ```python def print_items(**kwargs)``` \
-Which gives you a dictionary of items mapping the keyword to the argument, so you can access the values by the key.
+Which gives you a dictionary of items mapping the keyword to the #gls("arg"), so you can access the values by the key.
 
 
 
@@ -2012,7 +2012,7 @@ def enter_number() -> int:
         return enter_number()
 ```
 
-Recursion is less safe to use over traditional loops, because every new function you call, you don't terminate the previous function, you just put a new one on the call stack. This could potentially cause a stack overflow.\
+Recursion is less safe to use over traditional loops, because every new function you call, you don't terminate the previous function, you just put a new one on the call stack. This could potentially cause a #gls("call stack") overflow.\
 Recursion is very much linked to the functional paradigm, and it doesn't make much sense to go further in it here, so I go over it in much more detail in my Functional Programming in Python chapter. #link(<functional-chapter>)[(link here)]
 
 == Summary exercises
@@ -2075,11 +2075,11 @@ For this case, there's a `mean` function, but you have to import it with \ ```py
 //
 // To calculate the average use another function that uses previous in-built functions, or code your own function to return the mean of the three numbers in the list.
 //
-// Lastly for the `teacher_comment` function, use selection or a dictionary to print the message, but make sure that you pass the names and the average of the grades as parameters for the function.
+// Lastly for the `teacher_comment` function, use selection or a dictionary to print the message, but make sure that you pass the names and the average of the grades as #glspl("parameter") for the function.
 //
 // Then you must call all you functions in a `main()` function, and you can choose to either take these returned values as variables and then pass them or nest all your functions. 
 //
-// Your main function must not take any parameters and must not return any values.\
+// Your main function must not take any #glspl("parameter") and must not return any values.\
 // Lastly call your main function with this code block:\
 // ```python
 // if __name__ == "__main__":
@@ -2174,7 +2174,7 @@ def function(a):
 
 ```
 0. Using descriptive names \
-    This might be really really obvious but using good, descriptive, clear and mostly short names for functions #glspl("var") and #glspl("cls") is really important to keep your code easy to read and use. Here we had to explain what the function did and what the parameter was. Instead if we had written this: \
+    This might be really really obvious but using good, descriptive, clear and mostly short names for functions #glspl("var") and #glspl("cls") is really important to keep your code easy to read and use. Here we had to explain what the function did and what the #gls("parameter") was. Instead if we had written this: \
 ```python
 def find_circumference(diameter):
     # 3.141 is pi, which we multiply the diameter to get the circumference
@@ -2601,7 +2601,7 @@ Then run this in the project directory:\
 ```sh python -m venv env```\
 This makes a directory called `env` that houses your environment. To activate it run this:\
 ```sh source env/bin/activate```\
-Now you are ready to install packages with pip. Installing them with the package manager is really easy, just use `pip install {package name} ``` to install and `pip uninstall {package name}` to uninstall. If you want he help page just run `pip` with no arguments.
+Now you are ready to install packages with pip. Installing them with the package manager is really easy, just use `pip install {package name} ``` to install and `pip uninstall {package name}` to uninstall. If you want he help page just run `pip` with no #glspl("arg").
 \
 Here's an example:\
 `pip install matplotlib`\
@@ -2620,7 +2620,7 @@ If you don't want to constantly write out `matplotlib.pyplot.graph` you can alia
 
 = Reading/writing to/from external files
 
-As of now, you've only stored data in #gls("mem")#footnote[Most often this is actually CPU cache, and when machine code executes on the CPU, parameters from functions are most likely passed in directly into the CPU registers (Memory Data Register in Von Neumann Architecture)]
+As of now, you've only stored data in #gls("mem")#footnote[Most often this is actually CPU cache, and when machine code executes on the CPU, #glspl("parameter") from functions are most likely passed in directly into the CPU registers (Memory Data Register in Von Neumann Architecture)]
  in #glspl("var"), which means that when the program terminates the data is lost. If we want data to be stored persistently, we need to write to external files and save them to the disk, for example, you may want to store logins and usernames or user data in an external file.\
 
 Here's how python handles this:\
@@ -2757,7 +2757,7 @@ class AritheticClass:
 ```python
 a = ArithmeticClass(69)
 ```
-Any parameters in the `__init__` dunder method are ones you have to give when you make a class.\
+Any #glspl("parameter") in the `__init__` dunder method are ones you have to give when you make a class.\
 Now we can't just print this class out - this is what we get when we do:\
 ```python <__main__.ArithmeticClass object at 0x7fc09fec7eb0```\
 We just got the memory address of it but not the value of it. This is because we didn't return anything in the `__init__` method - and we can't as it must return the `None` type. \
@@ -2797,12 +2797,12 @@ class ArithmeticClass:
         return a + b
 
 ```
-But this throws an error as we need to have the self parameter on an instance method, which is the type that you've seen so far.
+But this throws an error as we need to have the self #gls("parameter") on an instance method, which is the type that you've seen so far.
 What error? Here:\
 ```
-TypeError: ArithmeticClass.add_two_values() takes 2 positional arguments but 3 were given
+TypeError: ArithmeticClass.add_two_values() takes 2 positional #glspl("arg") but 3 were given
 ```
-Python is telling us that we gave it two many arguments, you'll get the same error with this example:\
+Python is telling us that we gave it two many #glspl("arg"), you'll get the same error with this example:\
 ```python
 def function(a, b):
     return a + b
@@ -2810,7 +2810,7 @@ def function(a, b):
 
 result = function(0, 1, 2)
 ```
-You may be confused as we only gave it `a, b` in the function call, but this error occurs because we have an instance method, which takes `self` (this can be called anything but by conversion it's called `self` in python, so python assumes you called the `self` instance parameter `a`). \
+You may be confused as we only gave it `a, b` in the function call, but this error occurs because we have an instance method, which takes `self` (this can be called anything but by conversion it's called `self` in python, so python assumes you called the `self` instance #gls("parameter") `a`). \
 One way to fix this is to add self in the function definition, like this:\
 
 ```python
@@ -2980,7 +2980,7 @@ class User:
 
 Now if you initialise without the email or hash fields, we get an empty string. Note this only works for #gls("imu") values.
 \
-You can also modify some values and how the dataclass behaves when you pass in parameters when you use the wrapper. Here are some useful ways to change how it behaves:\
+You can also modify some values and how the dataclass behaves when you pass in #glspl("parameter") when you use the wrapper. Here are some useful ways to change how it behaves:\
 
 1. `repr` by default is true and modifies the representation of the class.\
 By default if you print a dataclass it gives you all the values of the dataclass, for example if we printed our earlier dataclass user we would get:\
@@ -3029,7 +3029,7 @@ Python being a multi-paradigm language, it has the option to also write in a mor
 What does this mean?\
 The idea behind functional programming and languages like F\#, Haskell, Elixir etc is that:
 - The only abstraction allowed is a function (no #glspl("cls"), #glspl("obj"), #glspl("var"), only functions)
-  - Thus functions are treated a little bit differently, so functions are 'first class citizens' meaning they are treated like anything else, they can be passed around as anything else, and be returned from other functions, and taken in as parameters.
+  - Thus functions are treated a little bit differently, so functions are 'first class citizens' meaning they are treated like anything else, they can be passed around as anything else, and be returned from other functions, and taken in as #glspl("parameter").
   - Functions are pure, meaning that they have no side effects, don't mutate any #glspl("var"), and always take one input and return one output.
 - There is no state. 
   - State is anything that is stored in the program at runtime and changes. This means that all #glspl("var") are #gls("imu") - meaning when a value is set it cannot change. In fact, #glspl("var") are just names, rather than what we traditionally think of as a variable. 
@@ -3055,12 +3055,12 @@ All this is is a function without a name, but you can assign it to a variable, w
 square = lambda x: x * x
 ```
 This is the more functional way of writing a function. \
-You can also take and return any number of parameters: \
+You can also take and return any number of #glspl("parameter"): \
 ```python
 sum3 = lambda: x, y, z: x + y + z
 ```
 
-As you can see it can take any number of arguments. Lambda functions can also return any number of values, by bundling them together as a tuple or list, like so:\
+As you can see it can take any number of #glspl("arg"). Lambda functions can also return any number of values, by bundling them together as a tuple or list, like so:\
 ```python
 diffAndSum = lambda x, y: (x + y, x - y)
 ```
@@ -3078,7 +3078,7 @@ add_42 = return_add_n(42)  # add_42 is now a function that given an integer will
 print(add_42(27))  # prints 42 + 27, so 69
 ```
 == Currying
-This is named after mathematician Haskell Curry, and is a way to 'bind' parameters to strictly pure functions that always take one parameter and always return a single value. \
+This is named after mathematician Haskell Curry, and is a way to 'bind' #glspl("parameter") to strictly pure functions that always take one #gls("parameter") and always return a single value. \
 Let's first look at the impure way of doing it:\
 ```python
 sum = lambda a, b: a + b
@@ -3127,7 +3127,7 @@ square = lambda x: x * x
 sum_two_squares = lambda a, b: sum(square(a), square(b))
 ```
 \
-There's still a problem here though, as in original lambda calculus functions have a fixed arity of 1, meaning they can only take one parameter. So let's fix this with currying:\
+There's still a problem here though, as in original lambda calculus functions have a fixed arity of 1, meaning they can only take one #gls("parameter"). So let's fix this with currying:\
 ```python
 sum = lambda a: (lambda b: a + b)
 
@@ -3164,9 +3164,9 @@ Since no #glspl("var") can be mutated, we instead use recursion, which is when f
 As I mentioned earlier, recursion when not used properly is risky as it can go on forever filling up the call stack until it breaks your program.\
 To avoid this, we must always have a termination in the recursion, with a terminal case:\
 We must have three types of cases in recursion:\
-- Recursive Case: The part of the function where it calls itself with modified arguments, moving the problem toward the base case.
+- Recursive Case: The part of the function where it calls itself with modified #glspl("arg"), moving the problem toward the base case.
 
-- Base Case: The simplest instance of the problem, where the function does not call itself and returns a direct answer. The base case prevents infinite recursion and stack overflow errors.
+- Base Case: The simplest instance of the problem, where the function does not call itself and returns a direct answer. The base case prevents infinite recursion and #gls("call stack") overflow errors.
 
 - Progress Toward Base Case: Each recursive call must modify the input to ensure that the base case is eventually reached.
 
@@ -3438,7 +3438,7 @@ def get_info():
     credit_card = int(input("enter credit card number: "))
     return name, credit_card
 ```
-since `get_info()` doesn't take any arguments we need to mock input by patching it like this: \
+since `get_info()` doesn't take any #glspl("arg") we need to mock input by patching it like this: \
 ```python
 import unittest
 from unittest.mock import patch
