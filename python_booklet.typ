@@ -846,7 +846,7 @@ Heterogeneous means it can hold mixed data types.
 
 === Common methods for lists:
 - `.append()` adds anything you pass as an argument in the brackets onto the end of the list
-- `.pop()` removes anything you pass as an argument in the brackets from the end of the list
+- `.pop()` removes anything you pass as an argument in the brackets from the end of the list, and also returns that value
 - `.extend([])` adds a list onto the end like append, the advantage being you can add more values in one go
 
 === Indexing in action
@@ -986,7 +986,7 @@ This works exactly the same way as the `.find` method or a normal search, but it
   content: [Python is a *Dynamically typed* language, which means that when you create or use #glspl("var"), you don't have to explicitly state the type, like you might have to in some other languages, such as C, C++, Go or Rust. \
   For example, if you wanted an integer `a` with a value of 10, you wouldn't have to write ```python a: int = 10``` where you explicitly state the type, you would just be ok with ```python a = 10```, and the translator figures it out. But this `: int` type annotation can be really helpful in making your code more readable, obvious, and easier to debug, as often your editor will give you a hint that something's wrong more often if you use type annotations.\
   To use type annotations, you can add `: {type}`, with any type, including custom types in OOP, and functions, and `None` for no return.\
-  To show a return type from a function (link to functions) you can use this: `-> {type}` \
+  To show a return type from a function (#link(<functions>)[link to functions chapter here]) you can use this: `-> {type}` \
   so for example:\
   ```python
   def simple_function() -> None:
@@ -1029,7 +1029,18 @@ or this: \
 )
 
 == Summary exercises
-I don't really having anything decent yet for this, as we haven't covered control flow, which is the next chapter.
+#exercise(
+    title: [Loop a list],
+    content: [suppose you have a list like this: \
+```python
+    epic_list = [1, 2, 3, 4, 5, 6]
+ ``` 
+And you want to take the first element and put it at the end, to get this list at the end: \
+```python
+    epic_list = [2, 3, 4, 5, 6, 1]
+ ``` 
+    See if you can write only *one* line of code to make this work. This should teach you about the order code gets executed, and how functions/methods order, and when calls open and close. You'll probably understand it better when we get to the functions chapter, but this is a nice introduction. ]
+)
 
 = Control flow and programming constructs <control-flow>
 
@@ -1356,14 +1367,17 @@ There are two keywords you need to know for while loops: \ `break` and `continue
 #exercise(
     title: [Countdown],
     content: [Create a countdown, where instead of the normal: \
-    ```python for i in range(1, 11):
-           print(i)``` you make it count in reverse. You might have to think a bit more for this one, and remember that there are multiple ways to loop. ]
+    ```python
+    for i in range(1, 11):
+        print(i)
+    ``` you make it count in reverse. You might have to think a bit more for this one, and remember that there are multiple ways to loop. ]
 )
 
 === Ex4
 #exercise(
     title: [Prime checker],
-    content: [Given a positive number print whether or not the number is prime.],
+    content: [Given a positive number print whether or not the number is prime.\
+Think about how you (as a person) normally check if a number is prime. Apply similar logic. ],
 )
 
 === Ex5
@@ -1384,17 +1398,55 @@ There are two keywords you need to know for while loops: \ `break` and `continue
     content: [An isogram is a word or phrase in which no letters repeat, for example 'uncopyrightable' and 'subdermatoglyphic' are isograms whereas 'eleven' isn't (the 'e' repeats). Write a program that takes an input and prints whether or not it is an isogram. ]
 )
 
+==== Ex8
+#exercise(
+    title: [Collapse an matrix],
+    content: [Suppose you have a spreadsheet which you read in as a 2d array (list of lists) that has records of employee bonuses every month. It may look something like this:
+```python
+    bonuses = [
+        ["James", 2000],
+        ["James", 2200],
+        ["James", 1800],
+        ["Jill", 4005],
+        ["Jill", 4005],
+        ["Jane", 6900],
+        ["James", 1148],
+ ]
+ ``` 
+And you want to collapse the table so that each person only shows up once with a cumulative bonus, so it looks like this: \
+
+```python
+    bonuses = [
+        ["Jill", 8010],
+        ["Jane", 6900],
+        ["James", 7148],
+ ]
+ ``` \
+Be aware that lists in python are mutable, and because of how they work you need to make sure that you either use the same table all the way through, or you make a completely new list that doesn't point to the same memory address. \
+This is quite a hard exercise to do manually (not using fancy python tricks with default dictionaries or the pandas library, which we haven't covered so don't use them), so try to be creative about it and break it down into multiple parts. There are many ways of doing this, try to find one that works. \ Good luck. ]
+)
 
 = In-built functions
+Let's quickly go over how to use a function: \
+```python
+  value = cool_function_here(6, 7) # <-- a function *call*
+# ^      |__________________|______|
+# |      | function name    |^  ^
+# |       ----------------| ||  |
+# ---captured return value| |'6' and '7' are arguments
+#                         | | supplied in parentheses
+```
+This is a function 'call'. A function call has a name#footnote[Well actually not all functions have names, anonymous functions called lambda functions don't, but that's covered in chatper 14], followed by parentheses, which can have arguments in them. The arguments are the real values you give the function when you call it. \
+Here `value` is the thing returned by `cool_function_here` which is taken into a variable. Not all functions return values. I cover how to write your own functions in the next chapter, here I just show python's in-built functions that do useful things. \
 
-Python has a number of handy, in built functions - which I will quickly go over. You have probably used some of these before.
+Python has a number of handy, in built functions -- which I will quickly go over. You have probably used some of these before.
 
 - `print`
-Function: Prints something to the console
+Function: Prints something to the console \
 Usage: Pass the thing you want to print in parentheses as an argument: ```python print("Hello")``` 
 
 - `input`
-Function: Take input from standard input and returns it, and can be used to put into a #gls("var"), but also as a parameter for another function.
+Function: Take input from standard input and returns it, and can be used to put into a #gls("var"), but also as a parameter for another function. \
 Usage: ```python var = input()```. Here `var` was the #gls("var") but you can put anything. It can be passed as a parameter like this:
 ```python
 >>> print(input("Please input something: "))
@@ -1446,14 +1498,14 @@ Function: Take a string and evaluate as a python expression.\
 Usage: ```python eval("print(\"Hello reader!\")")  # Prints "Hello reader!"```
 
 - `map`
-Function: Takes in a function and applies it to every item in an iterable.
+Function: Takes in a function and applies it to every item in an iterable. \
 Usage: ```python map(function, iterable)```
 
 - `filter`
 Function: Filter an iterable based on the given function, then return a generator. Look this up for more details.
 
 - `ord()` and `chr`
-Function: Convert a character into a Unicode code, and a Unicode code number into a character.
+Function: Convert a character into a Unicode code, and a Unicode code number into a character. \
 Usage:  ```python ord('A')``` is 65, and ```python chr(65)``` is 'A'. This is helpful for doing some fancy string operations where you need the letters to be treated as numbers to be able to use number operations on them.
 
 
@@ -1526,7 +1578,7 @@ This makes more sense after I cover Object Oriented programming in python in a l
     Notice how the `!` is unaffected. ]
 )
 
-= Functions and modular code
+= Functions and modular code <functions>
 
 As seen in the previous chapter, python has in built functions, but we can also create our own.\
 A function is a self-contained block of code that do a specific task. It returns a value.

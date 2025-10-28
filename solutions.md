@@ -80,6 +80,15 @@ print(word[::-1])
 
 # Chapter 5
 
+## Ex1
+
+
+```python 
+epic_list = [1, 2, 3, 4, 5, 6] 
+
+epic_list.append(epic_list.pop(0))
+```
+
 
 # Chapter 6
 
@@ -161,6 +170,48 @@ if len(s) < len(string):
     print("Not an isogram")
 else:
     print("Isogram")
+```
+
+## Ex8
+```python
+bonuses = [
+    ["James", 2000],
+    ["James", 2200],
+    ["James", 1800],
+    ["Jill", 4005],
+    ["Jill", 4005],
+    ["Jane", 6900],
+    ["James", 1148],
+]
+
+for row in bonuses:
+    print(row)
+
+unique_keys = []
+sum_list = []
+output_bonuses = []
+
+if len(bonuses) < 2:
+    output_bonuses[:] = bonuses
+else:
+    for i, _ in enumerate(bonuses):
+        if bonuses[i - 1][0] != bonuses[i][0]:
+            unique_keys.append(bonuses[i - 1][0])
+
+    unique_keys.append(unique_keys.pop(0))
+
+    for index, item in enumerate(unique_keys):
+        local_sum = 0
+        for row in bonuses:
+            if item == row[0]:
+                local_sum += row[1]
+        sum_list.append(local_sum)
+        output_bonuses.append([unique_keys[index], sum_list[index]])
+
+print("==========================================")
+
+for row in output_bonuses:
+    print(row)
 ```
 
 # Chapter 8
