@@ -798,7 +798,7 @@ Beware, sometimes floats misbehave - because of how the computer - which works i
 ```
 This is due to routing that occurs, a bit like how you can't store $1/3$ as a decimal properly in denary.
 
-== Boolean (bool)
+== #Gls("bool") (bool)
 A #gls("bool") can be `True` or `False`.
 This is often returned as a value for use in control flow (see #underline[@control-flow])
 They are handled as ints in python, and if you cast them as an int you get 0 and 1:
@@ -1072,11 +1072,11 @@ tuple -> ()
 dict  -> {}
 set   -> set()
 ```
-In all of these cases, they evaluate to false in a #gls("bool") context, which means that you can make if statements with just ```python
+In all of these cases, they evaluate to ```python False``` in a #gls("bool") context, which means that you can make if statements with just ```python
 if variable:
     # Some code
     ```
-  Any other value for these will evaluate to True]
+  Any other value for these will evaluate to ```python True```]
 )
 
 === Using `if`, `elif` and `else`
@@ -1115,7 +1115,7 @@ However this would, as it's one expression:\
 if 0 < number < 100:
     # Some code
 ```
-This is a python specific feature, very few other languages do this.
+This last part is a python specific feature, very few other languages do this.
 ]
 )
 Now suppose you want to have something else run if the condition isn't met, in this case we use the `else` keyword like this:\
@@ -1126,7 +1126,7 @@ else:
     print("You probably shouldn't drink ethanol")
 ```
 You'll notice that the `else:` block doesn't take a condition, because it acts as a 'catch all' type of case, it's the default case. \
-If you wanted to have something run if the initial condition was false, but not in the catch-all case you would use `elif` (short for else if), which allows you to pass another condition, like this:\
+If you wanted to have something run if the initial condition was false, but not in the catch-all case you would use ```python elif``` (short for else if), which allows you to pass another condition, like this:\
 ```python
 if number < 100 and number > 0:
     print("Number less than 100 but greater than 0")
@@ -1142,7 +1142,7 @@ else:
   content: [One way to handle errors to cover everything in `elif` blocks and leave `else` behind to catch anything you may have missed, rather than using it to catch wanted data. However don't over rely on this, as I later discuss when I talk about inversion to avoid nesting.]
 )
 
-Lastly for this if block, using `not` negates the #gls("bool"), so for example:\
+Lastly for this if block, using ```python not``` negates the #gls("bool"), so for example:\
 ```python
 if age > 18 and not country_of_residence == "USA":
     print("You can (legally) drink ethanol")
@@ -1175,7 +1175,7 @@ if getkey(user) is not None:
 
 === Using `match/case`
 
-If you have a lot of conditions to check, like 5 or 10, it may be impractical to use a really long chain of if/elif/elif/elif, where a much nicer way to do that is to the `match/case` syntax, which is basically a switch block from other languages (including OCR). Here's how it looks:\
+If you have a lot of conditions to check (upwards of 3) it may be impractical to use a really long chain of if/elif/elif/elif, where a much nicer way to do that is to the `match/case` syntax, which is basically a switch block from other languages (including OCR). Here's how it looks:\
 
 ```python
 def match_grade(score: int) -> str:
@@ -1231,14 +1231,13 @@ def match_grade(score: int) -> int:
         case _:
             return 0
 ```
-This looks a little strange, but translated this `s if s >= ?` really means 'match anything and bind it to s, but only if s is greater than or equal to ?'.\
+This looks a little strange, but translated this '`s if s >= ?`' really means "match anything and bind it to s, but only if s is greater than or equal to ?".\
 You can't directly write ```python case >= ?``` because `match case` matches patterns, not arbitrary values.
 
 == Iteration
 This means looping, and repeating certain parts of your code, often with some mutation in each iteration.\
 \
-Python has two kinds of loops: `for` and `while` \*\
-\* #text(size: 8pt)[*actually there's another which is a bit different called _recursion_, which I'll introduce properly later*]
+Python has two kinds of loops: `for` and `while`#footnote[Well actually there's another kind that is universal in almost all languages which is called _recursion_, which is when a function calls itself. I go more in-depth on recursion later on]: \
 
 Let's explore each of these:\
 
@@ -1254,7 +1253,7 @@ for v in example_list:
 ```
 Here it prints the value.\
 \
-To instead iterate over a range of numbers - in effect creating a count controlled loop, you can use this:\
+To instead iterate over a range of numbers -- in effect creating a count controlled loop, you can use this:\
 ```python
 for i in range(10):
     print(i)
@@ -1280,15 +1279,38 @@ This counts in twos, so the output from this program would be:\
 ```
 A common use case for the range function would be to iterate over a list by index, like this:\
 ```python
-example_list = [1,2,3]
+example_list = [2,4,6]
 for i in range(len(example_list)):
     print(example_list[i])
 ```
 But python has a much better way of doing this, with the `enumerate` function:\
 ```python
-example_list = [1,2,3]
-for i,v in enumerate(example_list):
+example_list = [2,4,6]
+for i, v in enumerate(example_list):
     print(f"Index: {i}, Value: {v}")
+```
+\
+Suppose you now wanted the number that the value is in the list, you might want to try do this: \
+```python
+example_list = [2,4,6]
+for i, v in enumerate(example_list):
+    print(f"Number: {i + 1}, Value: {v}")
+```
+Which gives this: \
+```
+Number: 1, Value: 2
+Number: 2, Value: 4
+Number: 3, Value: 6
+```
+Luckily this isn't necessary, and you can actually just pass in the start index into the `enumerate` function like this: \
+```python
+example_list = [2,4,6]
+for i, v in enumerate(example_list, 1):
+    print(f"Number: {i}, Value: {v}")
+``` \
+And if you wanted to be extra legible and expressive you can even use a 'key-word argument' (more on them later), like this: \
+```python
+enumerate(example_list, start=1):
 ```
 
 Another helpful function for loops is `zip()`:
@@ -1345,9 +1367,9 @@ while lives > 0:
         lives -= 1
 ```
 ==== Keywords for `while` loops
-There are two keywords you need to know for while loops: \ `break` and `continue`\
-`break` breaks you from the loop, no matter the condition\
-`continue` skips the rest of the loop below and continues onto the next iteration\
+There are two keywords you need to know for while loops: \ ```python break``` and ```python continue``` \ 
+```python break``` breaks you from the loop, no matter the condition\
+```python continue``` skips the rest of the loop below and continues onto the next iteration\
 
 == Summary exercises
 
@@ -1457,7 +1479,7 @@ Here it was passed to `print`.
 \
 Note that the input function takes input as a string unless you cast it otherwise.
 
-Also you can put a string to be printed to standard output as a #gls("parameter") to the input function in parentheses. 
+Also you can put a string to be printed to standard output as an #gls("arg") to the input function in parentheses. 
 
 - `len` 
 Function: Returns the length of the thing that was passed into it\
@@ -1474,7 +1496,7 @@ Function: Return the absolute value given (always positive, think of this as dis
 Function: Rounds value passed to it to the degree of accuracy specified\
 Usage: ```python round(1.23456, 2)  # Returns 1.23 ```
 
-- `range()`, `enumerate` and `zip`
+- `range`, `enumerate` and `zip`
 Covered in my control flow section.
 
 - `max`/`min`
@@ -1504,7 +1526,7 @@ Usage: ```python map(function, iterable)```
 - `filter`
 Function: Filter an iterable based on the given function, then return a generator. Look this up for more details.
 
-- `ord()` and `chr`
+- `ord` and `chr`
 Function: Convert a character into a Unicode code, and a Unicode code number into a character. \
 Usage:  ```python ord('A')``` is 65, and ```python chr(65)``` is 'A'. This is helpful for doing some fancy string operations where you need the letters to be treated as numbers to be able to use number operations on them.
 
@@ -1592,7 +1614,7 @@ You define a function with the `def` keyword, like this:\
 def my_function():
     print("I'm in a function!")
 ```
-By default if there is no `return` statement at the end of a function it implicitly returns the `None` type, if you want to be extra explicit you can use `return` with no #glspl("arg") or `return None`.\
+By default if there is no `return` statement at the end of a function it implicitly returns the `None` type, if you want to be extra explicit you can use a bare `return` with no #glspl("arg"). You use ```python return``` to exit the function (as the name implies), meaning you often use it where otherwise you might want a 'break'. This is helpful for keeping your code tidy as you don't need to have more if checks. I talk more about 'early returns' in chapter 9. \
 \
 As we've seen before, python expects indented code after the `:`, and if you want to keep your function, you can use the `pass` keyword to have no other code there, like this:\
 ```python
@@ -1772,7 +1794,7 @@ print(f"6 + 7 is: {add(6, 7)}, and that's the total!")
 ```
 #note(
   title: [Note: Python uses _Pass by #Gls("obj") Reference_],
-  content: [What this means is that if the object you give the function is mutable, any change you make to said object in the function is reflected outside the function as well. This is because they actually point to the same object in memory. ]
+  content: [What this means is that if the object you give the function is mutable, any change you make to said object in the function is reflected outside the function as well. This is because they actually point to the same object in memory. \ Knowing this, you frequently don't return lists from functions, rather an input and an output list are given to the function, and the function mutates the output list. ]
 )
 
 
