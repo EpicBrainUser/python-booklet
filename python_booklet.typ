@@ -674,14 +674,101 @@ age = 50
 greeting = f"Hello {name}, you are {age} years old"
 ```
 It is the most readable and probably best way of using string interpolation in python. It also has the advantage that you can put calculations in the curly braces, as anything inside them is treated like code. Try to use it when you can over the other methods.
+===== fstring tricks
+fstrings have a lot more to them than just this, so I'll go over them here as I think they deserve their own section. \
+1. Evaluation \
+    Use this to evaluate any expression and give the value in one go, by putting an '`=`' after the expression like this: 
+```python
+var = 64
+print(f"{var = }")
+```
+Which outputs: var = 64\
+And you can add anything that evaluates, so this works too: 
+```python
+var = 2
+print(f"{var ** 6 = }")
+```
+Which outputs: `var ** 6 = 64`
+2. Rounding \
+    Given this:
+```python
+print(f"{1/299_792_458:.12f}")
+```
+Which rounds off this really small number to just 12 decimal places, giving us this as output: $0.000000003336$
+3. Percent
+    Use a `%` to print as a percent, like this:
+```python
+test_score = 0.69421
+print(f"You got: {test_score:.2%}")
+```
+Which outputs: `You got 69.42%` \ (yes, it converts it and puts in the `%` for you!)
+4. Thousands separator \
+    In python you can put underscores `_` in numbers to make them more readable, so you can put this: ```python c = 299_792_458``` and the underscores are ignored by the compiler. Also it doesn't matter where you place them, it's just for readability of the code, you may as well have put this: ```python c = 29_97_92_45_8``` which doesn't make much sense but you could if you wanted to. Well, you can have fstrings do this for you when printing large numbers!
+```python
+c = 299792458
+print(f"{c = :_}")
+```
+Which outputs: `c = 299_792_458`, which is kinda weird, so you can also use commas like this: 
+```python
+print(f"c = {c:,}")
+```
+But those are the only two characters you can use as the thousands separator.
 
-- rstrings
+5. Alignment \
+    You can specify the width you want the placeholder to take by putting it after the colon like this: \
+```python
+my_string = "foo"
+print(f":{my_string:10}:")
+```
+Which outputs:
+```
+:foo       :
+```
+So `my_string` takes 10 characters width. \
+You can specify the side it's aligned on with `<`, `^`, `>`, for left, center and right respectively. Left is the default so you often won't need to specify it. \
+Here's how the code and output for this looks like:
+```python
+my_string = "foo"
+print(f":{my_string:<10}:")
+print(f":{my_string:^10}:")
+print(f":{my_string:>10}:")
+```
+#line()
+```
+:foo       :
+:   foo    :
+:       foo:
+```
+Before the direction you can put a 'fill character' like this: \
+```python
+print(f":{my_string:_^10}:")
+```
+Which gives this:
+```
+:___foo____:
+```
+It's also worth mentioning that you can make the width a variable in your program, and then use another pair of curly brackets to inject it into the formatter, like so:
+```python
+width = 9
+print(f":{my_string:_^{width}}")
+```
+6. Custom format specifiers
+While this is probably the coolest of the format tricks you can use with fstrings, I can't actually show this yet as it involves creating a custom object, and I only cover OOP in chapter 13. If you want to try anyway, here's the link to where I explain it: #link(<dunder-format>)[Custom formatting]
+
+- rstrings and french strings
 Short for 'raw strings', this means anything you put in the string is taken as is, so you can print escape sequences.\
 For example:\
 ```python
 print(r"C:\Users\nathan")
 ```
 This is an example for a use case, it's a file path in windows and uses `\` for paths, which means you can accidentally include escape sequences, like `\n`, and to avoid having them mess up your string you use a raw string (rstring) \
+If you want to have format specifiers and no escape code you use a 'french string', which looks like this: 
+```python
+username = r"Al\nice"  # raw (r) string
+french_string = fr"C:\Users\{username}\new_pictures"  # raw format string (french string, fr)
+```
+This is useful for avoiding SQL injection style attacks, as no escape code in the `{}` will be evaluated. \
+(I call it a 'french string' because the type of string is 'fr')
 
 If you need a multi-line string you can use triple double or single quotes like this:
 ```python
@@ -1398,7 +1485,7 @@ Think about how you (as a person) normally check if a number is prime. Apply sim
     content: [An isogram is a word or phrase in which no letters repeat, for example 'uncopyrightable' and 'subdermatoglyphic' are isograms whereas 'eleven' isn't (the 'e' repeats). Write a program that takes an input and prints whether or not it is an isogram. ]
 )
 
-==== Ex8
+=== Ex8
 #exercise(
     title: [Collapse an matrix],
     content: [Suppose you have a spreadsheet which you read in as a 2d array (list of lists) that has records of employee bonuses every month. It may look something like this:
@@ -2758,9 +2845,13 @@ class AritheticClass:
 a = ArithmeticClass(69)
 ```
 Any #glspl("parameter") in the `__init__` dunder method are ones you have to give when you make a class.\
-Now we can't just print this class out - this is what we get when we do:\
+
+== Magic Methods (`__dunder__` methods)
+Magic methods define special functionality of objects that is more specific to the language rather than what you yourself make it do. Below I show some examples, including the fancy formatting I said I would cover way back in chapter 3. \
+
+Now we can't just print this class out -- this is what we get when we do:\
 ```python <__main__.ArithmeticClass object at 0x7fc09fec7eb0```\
-We just got the memory address of it but not the value of it. This is because we didn't return anything in the `__init__` method - and we can't as it must return the `None` type. \
+We just got the memory address of it but not the value of it. This is because we didn't return anything in the `__init__` method -- and we can't as it must return the `None` type. \
 If you wanted to have an output from print you need to use the dunder method `__str__` which prints a string to the console when printing the object normally. Here's how to use it:\
 ```python
 class ArithmeticClass:
@@ -2781,7 +2872,31 @@ The `__str__` method only returns a string, so you need to wrap it in the `str()
 
 The only point of `__init__` is to initialise the class the #glspl("var"), not to do anything else. Hence the other dunder methods - such as `__str__` for string representation.\
 \
-Any dunder method (double underscore), sometimes called a magic method is a method that does something special to python, for example there's the `__len__` method for defining a result when ran in the `len` function. 
+There are other magic methods, for example there's the `__len__` method for defining a result when ran in the `len` function. \
+<dunder-format>
+I'll also show you how to make your own format specifiers. These are done with the `__format__` method. \
+```python
+class Text:
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+    def __format__(self, format_spec: str) -> str:
+        match format_spec:
+            case 'upper':
+                return self.text.upper()
+            case _:
+                raise ValueError(f"{format_spec} does not exist")
+```
+This was a simplistic example of how to define a custom text object that has fancy formatting. \
+Here's how to use it: 
+```python
+cool_text: Text = Text("iNtErEsTiNg")
+print(f"{cool_text:upper}")
+```
+This gives us:
+```
+INTERESTING
+```
 
 == Static methods
 Now suppose we want to add some more general functions to our `ArithmeticClass`, that do general operations but don't change the state of the class (any values we defined that belong to the class, like the `self.value`. We could try do this at first:\
@@ -3008,6 +3123,7 @@ class User:
     email: str = ""
     _hash: str = ""
 ```
+
 
 == Summary exercises
 
