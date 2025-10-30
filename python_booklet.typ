@@ -784,13 +784,28 @@ has many lines
 and it's formatted like this
 '''
 ```
-This is called a _docstring_.\
+This is called a _docstring_, and it preserves the given formatting, so you can just type newlines and tabs like normal without the escape codes (`\n`, `\t`).\
+Alternatively you can put backslashes `\` at the end of the line to signify line continuation, like this: #footnote[The typst syntax highlight went funny here probably because it's using an older python version, so I put it as plain text not to confuse you] \
+
+```
+line_continuation_string = "This string, is a bit different\n \
+because you see --\n \
+It spans many lines, yet only uses \n \
+a single pair of \"double quotes\" "
+```\
+Giving us: \
+```
+This string, is a bit different
+ because you see --
+ It spans many lines, yet only uses 
+ a single pair of "double quotes" 
+```
+
 It may be wiser to either use double or single quotes for your strings, for example doing this might not work:\ 
 \
 ```python string = 'This string will fail as it's not formatted properly'```
 \
 If we run it we get this:
-#pagebreak()
 ```python
 >>> string = 'This string will fail as it's not formatted properly'
   File "<stdin>", line 1
@@ -820,6 +835,7 @@ The solution here is to use double quotes, instead of single quotes.
 -   `\r` for carriage return
 -   `\b` for backspace
 -   `\a` for bell (alert)
+-   `\<newline>` for cancel newline (like I showed before)
 ]
 )
 
@@ -939,7 +955,7 @@ Heterogeneous means it can hold mixed data types.
 === Indexing in action
 Each value in the list has an index, and these are 0 based.\
 So in the list `[1,2,3]` the indexing assigns index 1 at index 0, 2 at index 1, and 3 at index two.\
-Negatives are also allowed, so index -1 is 3, index -2 is 2 and index -3 is 1. Here negative indexes start from the back of the list.\
+Negatives are also allowed, so index -1 is 3, index -2 is 2 and index -3 is 1. Negative indexes start from the back of the list.\
 \
 To access an index, you use this syntax: `list[index]`
 
@@ -1260,6 +1276,27 @@ if getkey(user) is not None:
  ``` (It's called this because it kind of looks like a walrus' face)]
 )
 
+=== Python's ternary operator (conditional expressions)
+The expression ```pythonh x if C else y``` x first evaluates the condition, C rather than x. If C is true, x is evaluated and its value is returned; otherwise, y is evaluated and its value is returned. \
+Let's see a real use case: \
+
+```python 
+items = (1, 1, 2, 3, 5, 8, 13, 21)
+SEARCH_ITEM = int(input("Enter item to search for: "))
+result = SEARCH_ITEM if SEARCH_ITEM in items else -1
+```
+
+This is the same as doing this: \
+
+```python 
+items = (1, 1, 2, 3, 5, 8, 13, 21)
+SEARCH_ITEM = int(input("Enter item to search for: "))
+if SEARCH_ITEM in items:
+    result = SEARCH_ITEM
+else:
+    result = -1
+```
+
 === Using `match/case`
 
 If you have a lot of conditions to check (upwards of 3) it may be impractical to use a really long chain of if/elif/elif/elif, where a much nicer way to do that is to the `match/case` syntax, which is basically a switch block from other languages (including OCR). Here's how it looks:\
@@ -1299,8 +1336,6 @@ def match_grade(score: int) -> str:
         case _:
             return 'F'
 ```
-(page over)
-#pagebreak()
 And you can also use the `if` keyword in a match statement, like so:\
 ```python
 def match_grade(score: int) -> int:
@@ -1453,10 +1488,46 @@ while lives > 0:
     if not health:
         lives -= 1
 ```
-==== Keywords for `while` loops
+==== Keywords for ```python while``` loops
 There are two keywords you need to know for while loops: \ ```python break``` and ```python continue``` \ 
 ```python break``` breaks you from the loop, no matter the condition\
 ```python continue``` skips the rest of the loop below and continues onto the next iteration\
+
+=== ```python else``` clauses for loops
+This is sort-of a strange concept at first, and is a bit of a strange addition to python, but a loop can have an ```python else``` clause to run when the whole loop without using ```python break``` to break out of it. In a way you can think of the break as a 'success' and the else is hit if it fails. Let's look at an example where you might want this: \
+```python
+items = (1, 1, 2, 3, 5, 8, 13, 21)
+SEARCH_ITEM = int(input("Enter item to search for: "))
+for item in items:
+    if item == SEARCH_ITEM:
+        print(f"Item {item} was found in list.")
+        break
+else:
+    print("Item was not in list. ")
+```
+This was an example of a linear search with python's else clause. \
+The else clause only runs if there is no break. \
+
+This works with ```python while``` loops as well: 
+```python
+flag = True
+while flag:
+    number = int(input("Enter number, 0 to break, -1 to jump to else"))
+    if number == -1:
+        flag = False
+    elif number == 0:
+        break
+else:
+    print("You typed -1")
+```
+This just illustrates the tool in python, I couldn't come up with a better example right now, sorry...\
+\
+This doesn't make that much sense in python, as scope blocks don't always return values (only functions can)#footnote[I say this because Zig has all scope blocks return values (like: ```zig break 5```), and also have else clauses if the condition isn't reached, but there it makes sense, here not so much]. A nice way to think about it to get your head around this idea is thinking of it like the ternary operator, much like: 
+```python
+result = value if value in items else -1
+```
+will break on value but if not will go to the else block and 'return' -1. #footnote[This is NOT a ```python return```, only functions can ```python return``` values, see chapter 7/8; but you can think of it as one for the purposes of demonstrating this concept. ] \
+Anyway this was a strange concept, and I don't really recommend using this #gls("syn-sug") because it makes your code quite confusing to those who don't know how it works.
 
 == Summary exercises
 
@@ -2540,6 +2611,22 @@ def divide(dividend, divisor):
 ]
 )
 
+Beware that using ```python except Exception``` makes you look lazy and your code sloppy, just google for the actual exception and catch it, you often want to have your program crash at something unexpected in development so you catch the actual things that could go wrong. \
+\
+Remember that weird ```python else``` clause from loops? \
+Well, you can use it here as well, like this: \
+```python
+try: 
+    print("I might fail!")
+except Exception:
+    print("I catch the dangerous code")
+else:
+    print("There were no exceptions, I terminated naturally")
+```
+This will print: `I might fail! There were no exceptions.` \
+If in the ```python try``` block we raised an exception (or the code failed) the ```python else``` clause would not run. 
+This is basically like how the loops ```python else``` works, so kind of a weird idea, but you have it if you want it. \ \
+
 Then you might want some cleanup in the try/except clause, where you have code to run no matter what error occurred - in actual examples of real code, this is often things like closing off connections to databases and closing files (but for this just use a context manager (```python with```)).\
 To do this use the `finally` keyword at the end of your clause like this:\
 ```python
@@ -2553,10 +2640,13 @@ except Exception:
       # As many exceptions as you want to try to catch, you 
       # can have as many of these blocks as you want
       # 'Exception' is a 'catch all' solution you don't usually want
+else:
+    # If no exceptions were raised
 finally:
       # A single finally block here
 ```
 \
+
 == Raising exceptions
 However sometimes you also want to deliberately cause an error to crash the program, and then either catch this or let it terminate the code. \
 For this you use ```python raise``` keyword, like this:\
