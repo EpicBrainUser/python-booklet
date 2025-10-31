@@ -2914,9 +2914,82 @@ The `.json` format is pretty helpful for reading and writing data to files in a 
 
 
 
-= Object Oriented Programming in Python <oop-ch>
+= Object Oriented Programming <oop-ch>
 
-In python, everything is an object - you can test this by wrapping anything in the `type` function.\
+== What is OOP? (Why do we care?)
+
+=== The four main pillars:
+
+==== Encapsulation
+==== Inheritance
+==== Polymorphism
+==== Abstraction
+
+== Classes and Objects
+=== Defining a class
+=== Creating instances (`__init__` and `self`)
+=== Instance attributes vs class attributes
+=== Methods: instance, class and static
+=== The `__new__` method
+
+== Encapsulation
+=== Public, protected, private (`_x`, `__x`)
+=== Name mangling explained
+=== Properties (`@property`, `@x.setter`, `@x.deleter`)
+=== Why encapsulation matters
+
+== Inheritance
+=== Single inheritance
+=== Method overriding
+=== `super()` - how and when to use it
+=== Multiple inheritance and the MRO (Method Resolution Order)
+=== `isinstance()`, `issubclass()`, and type checking
+
+== Polymorphism
+=== Runtime polymorphism via method overriding
+=== Duck typing -- Python's idiomatic polymorphism
+=== Polymorphic built-ins (```python len str iter```)
+=== Operator overloading as polymorphism
+
+== Magic Methods
+=== Object lifecycle: `__new__`, `__init__`, `__del__`
+=== String representation: `__str__`, `__repr__`
+=== Comparison: `__eq__`, `__lt__`, `__hash__`
+=== Arithmetic: `__add__`, `__mul__`, `__sub__`, etc.
+=== Container emulation: `__len__`, `__getitem__`, `__setitem__`, `__iter__`, `__next__`
+=== Callable objects: `__call__`
+=== Context managers: `__enter__`, `__exit__`
+
+== Class Methods and Static Methods
+=== `@classmethod` -- alternative constructors
+=== `@staticmethod` -- utility functions
+=== When to use which?
+
+== Abstract Base Classes (ABCs)
+=== Enforcing interfaces in Python
+=== `abc.ABC` and `@abstractmethod`
+=== Example: `Shape` with `area()` abstract method
+
+== Dataclasses -- Modern Python OOP
+=== `@dataclass` basics
+=== Default values, `field()`, `InitVar`
+=== `@dataclass(frozen=True)`, `@dataclass(order=True)`
+=== Post-init processing (`__post_init__`)
+=== When to use dataclasses vs regular classes
+
+== Composition over Inheritance
+=== "Has-a" vs "Is-a"
+=== Example: `Car` has an `Engine`, not inherits from it
+=== Favor composition for flexibility
+
+== Summary Exercises
+=== Ex1: BankAccount with private balance and property
+=== Ex2: Shape hierarchy with polymorphism and ABC
+=== Ex3: Custom List with `__getitem__`, `__len__`, `__add__`
+=== Ex4: `@dataclass` for `Point3D` with `__add__` and `__repr__`
+=== Ex5: Factory pattern using `@classmethod`
+
+In python, everything is an object -- you can test this by wrapping anything in the `type` function.\
 ```python
 x: int = 12
 print(type(x))
