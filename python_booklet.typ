@@ -2493,10 +2493,33 @@ def func():
 
 == Summary exercises
 
-#note(
-    title: [Unfinished],
-    content: [I still have yet to add the exercises here, at some point I will update this.]
+
+=== Ex1
+#exercise(
+    title: [Refactor the validator],
+    content: [Look at this gross code:
+```python
+    def validate_password(password: str) -> tuple[bool, str]:
+    if len(password) >= 8:
+        if any(char.isdigit() for char in password):
+            if any(char.isupper() for char in password):
+                if any(char.islower() for char in password):
+                    if password[0] != '!' and password[-1] != '!':
+                        return (True, "Password is valid.")
+                    else:
+                        return (False, "Password cannot start or end with '!'")
+                else:
+                    return (False, "Password must contain a lowercase letter.")
+            else:
+                return (False, "Password must contain an uppercase letter.")
+        else:
+            return (False, "Password must contain a number.")
+    else:
+        return (False, "Password must be at least 8 characters long.")
+ ``` \
+Refactor it using inversion (early return guard clause) so that it doesn't have any nesting -- maximum nesting of 1 (no `if` inside another `if`).]
 )
+
 
 = Error handling
 In most high-level languages #footnote[Here I mean imperative Object Oriented high-level languages, like C++ and Java, but excluding things like Haskell (functional) or Zig (Zig has its own error system)], there are several kinds of errors:\
@@ -3696,6 +3719,19 @@ This is a way of developing your code where instead of writing a bunch of code, 
 
 == Summary exercises
 
+=== Ex1
+#exercise(
+    title: [Test a user input],
+    content: [You have this function: 
+```python
+    def get_user_confirmation(prompt: str) -> bool:
+    answer = input(prompt + " [y/n]: ").lower().strip()
+    return answer == 'y'
+ ```
+Write unit tests for it, mocking the input function. Write at least two, one where the user 'types' 'y', one where the user types 'NO '. ]
+)
+
+
 #note(
     title: [Unfinished],
     content: [This part here is unfinished, at some point I'll come back and add this content. ]
@@ -3891,11 +3927,15 @@ Result: Success for task 1
 Result: Task 2 failed!
 Result: Success for task 3
 ```
-
 #note(
     title: [Unfinished],
     content: [This part here is unfinished, at some point I'll come back and add this content. ]
 )
+
+== Summary Exercises
+
+
+
 
 = References
 
