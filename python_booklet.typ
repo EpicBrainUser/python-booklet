@@ -379,17 +379,19 @@ Let's have a brief look at python's operators.
 (You don't really have to worry about the last one, you almost never need it)
 
 But wait, there's more!\
-As well as arithmetic operators, there are also logical and bitwise operators. Let's have a look at these as well.\
-Logical operators:
+As well as arithmetic operators, there are also comparison, logical and bitwise operators. Let's have a look at these as well.\
+Comparison operators:
 #table(
   columns: 4,
   table.header[*Operator*][*Name*][*Example*][*Output*],
   [```python ==```], [Equality], [```python "" == []```], [```python False```],
+  [```python !=```], [Inequality], [```python "" == []```], [```python True```],
   [```python >```], [Greater than], [```python 10 > 10```], [```python False```],
   [```python <```], [Less than], [```python 10 < 10```], [```python False```],
   [```python >=```], [Greater-than-or-equal-to], [```python 10 >= -1```], [```python True```],
   [```python <=```], [Less-than-or-equal-to], [```python 10 <= 10```], [```python True```],
 )
+Logical operators:
 #table(
   columns: 4,
   table.header[*Operator*][*Name*][*Example*][*Output*],
@@ -3955,17 +3957,32 @@ Result: Success for task 3
 )
 
 #table(
-  columns: 4,
-  table.header[*Operator*][*Name*][*Example*][*Output*],
-  [```python =```], [Assignment], [```python architecture = "x86_64"```], [],
-  [```python := ```], [Walrus], [```python print( x := 3 )```], [3],
+  columns: 5,
+  table.header[*Operator*][*Name*][*Example*][*Same as*][*Output*],
+              [```python =```], [Assignment],                                 [```python architecture = "x86_64"```], [], [],
+              [```python +=```], [Addition Augmented Assignment],             [```python x += 1```], [```python x = x + 1```], [],
+              [```python -=```], [Subtraction Augmented Assignment],          [```python x -= 1```], [```python x = x - 1```], [],
+              [```python *=```], [Multiplication Augmented Assignment],       [```python x *= 3```], [```python x = x * 3```], [],
+              [```python /=```], [Division Augmented Assignment],             [```python x /= 2```], [```python x = x / 2```], [],
+              [```python //=```], [Floor Division Augmented Assignment],      [```python x //= 2```], [```python x = x // 2```], [],
+              [```python %=```], [Modulo Augmented Assignment],               [```python x %= 12```], [```python x = x % 12```], [],
+              [```python **=```], [Exponentiation Augmented Assignment],      [```python x **= 16```], [```python x = x ** 16```], [],
+              [```python &=```], [Bitwise AND Augmented Assignment],          [```python x &= y```], [```python x = x & y```], [],
+              [```python |=```], [Bitwise OR Augmented Assignment],           [```python x |= y```], [```python x = x | y```], [],
+              [```python ~=```], [Bitwise NOT Augmented Assignment],          [```python x ~= y```], [```python x = x ~ y```], [],
+              [```python ^=```], [Bitwise XOR Augmented Assignment],          [```python a ^= b```], [```python a = a ^ b```], [],
+              [```python <<=```], [Bitwise left-shift Augmented Assignment],  [```python x <<= 2```], [```python x = x << 2```], [],
+              [```python >>=```], [Bitwise right-shift Augmented Assignment], [```python x >>= 1```], [```python x = x >> 1```], [],
+              [```python := ```], [Walrus], [```python print(x := 3)```], [```python x = 3print(x)```], [3],
 )
 
+#pagebreak()
 
 #table(
   columns: 4,
   table.header[*Operator*][*Name*][*Example*][*Output*],
   [```python ==```], [Equality], [```python "" == []```], [```python False```],
+  [```python !=```], [Inequality], [```python "" == []```], [```python True```],
   [```python >```], [Greater than], [```python 10 > 10```], [```python False```],
   [```python <```], [Less than], [```python 10 < 10```], [```python False```],
   [```python >=```], [Greater-than-or-equal-to], [```python 10 >= -1```], [```python True```],
