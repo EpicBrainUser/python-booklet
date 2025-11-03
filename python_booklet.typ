@@ -2917,77 +2917,34 @@ The `.json` format is pretty helpful for reading and writing data to files in a 
 = Object Oriented Programming <oop-ch>
 
 == What is OOP? (Why do we care?)
+Object oriented programming is a programming paradigm that uses objects, to compose your program (as the name might imply). Objects are entities that encapsulate their own state (the data that they hold), behaviour (functions/methods associated with them, that allow them to do things) and identity (which separates them from any other object). \
+The idea behind Object Oriented Programming is that it allows you to more closely model real world objects, and therefore solve real world problems more easily. \
+Objects hold many different types of data together, and the data that objects hold is called their 'state'. 
 
 === The four main pillars:
-
 ==== Encapsulation
+This is bundling up data into objects, and making it so that only the parts of a program that need to see data can see it. This is why there are features such as private methods. \
+This is often referred to as 'data hiding'. \
+Each object becomes responsible for its own state. \
+The key idea here is to hide away more of your code, making them inaccessible if they aren't needed.
 ==== Inheritance
+This is the idea that one object can acquire the methods and properties of another. \
+The major advantage of this principle is that it can help greatly with abstraction, and making your code more reusable. 
 ==== Polymorphism
+This means that something can be used in many different forms, and allows for things like having a function that works with many different types of data -- e.g the ```python len``` function can be used with arrays and strings, even though they are of different data types, and the ```python +``` operator is addition with integers, but concatenation with arrays and strings. \
 ==== Abstraction
+This is removing unnecessary details to focus on the larger picture of the problem you are trying to solve. This could refer to removing unnecessary parts of a large problem, where for example if you have a gambling game with dice, you could just use ```python random.randint(1, 6)``` as the dice throw, and thus removing the other details, such as the noise a dice makes the graphics etc. \
+But it also refers to the actual implementation of aspects of a project, where you hide away the fine details for easier usage. For example in python, there are the two UI functions ```python print``` and ```python input```. The actual implementation is hidden away so you can just use the function and not worry about memory allocation, buffers, the operating system and file system (stdin and stdout are abstracted as files by the OS) and so on. 
 
 == Classes and Objects
+=== What is an object, how do they work in python?
+As I mentioned above, an object allows you to wrap up multiple of the 
+
 === Defining a class
 === Creating instances (`__init__` and `self`)
 === Instance attributes vs class attributes
 === Methods: instance, class and static
 === The `__new__` method
-
-== Encapsulation
-=== Public, protected, private (`_x`, `__x`)
-=== Name mangling explained
-=== Properties (`@property`, `@x.setter`, `@x.deleter`)
-=== Why encapsulation matters
-
-== Inheritance
-=== Single inheritance
-=== Method overriding
-=== `super()` - how and when to use it
-=== Multiple inheritance and the MRO (Method Resolution Order)
-=== `isinstance()`, `issubclass()`, and type checking
-
-== Polymorphism
-=== Runtime polymorphism via method overriding
-=== Duck typing -- Python's idiomatic polymorphism
-=== Polymorphic built-ins (```python len str iter```)
-=== Operator overloading as polymorphism
-
-== Magic Methods
-=== Object lifecycle: `__new__`, `__init__`, `__del__`
-=== String representation: `__str__`, `__repr__`
-=== Comparison: `__eq__`, `__lt__`, `__hash__`
-=== Arithmetic: `__add__`, `__mul__`, `__sub__`, etc.
-=== Container emulation: `__len__`, `__getitem__`, `__setitem__`, `__iter__`, `__next__`
-=== Callable objects: `__call__`
-=== Context managers: `__enter__`, `__exit__`
-
-== Class Methods and Static Methods
-=== `@classmethod` -- alternative constructors
-=== `@staticmethod` -- utility functions
-=== When to use which?
-
-== Abstract Base Classes (ABCs)
-=== Enforcing interfaces in Python
-=== `abc.ABC` and `@abstractmethod`
-=== Example: `Shape` with `area()` abstract method
-
-== Dataclasses -- Modern Python OOP
-=== `@dataclass` basics
-=== Default values, `field()`, `InitVar`
-=== `@dataclass(frozen=True)`, `@dataclass(order=True)`
-=== Post-init processing (`__post_init__`)
-=== When to use dataclasses vs regular classes
-
-== Composition over Inheritance
-=== "Has-a" vs "Is-a"
-=== Example: `Car` has an `Engine`, not inherits from it
-=== Favor composition for flexibility
-
-== Summary Exercises
-=== Ex1: BankAccount with private balance and property
-=== Ex2: Shape hierarchy with polymorphism and ABC
-=== Ex3: Custom List with `__getitem__`, `__len__`, `__add__`
-=== Ex4: `@dataclass` for `Point3D` with `__add__` and `__repr__`
-=== Ex5: Factory pattern using `@classmethod`
 
 In python, everything is an object -- you can test this by wrapping anything in the `type` function.\
 ```python
@@ -3031,114 +2988,18 @@ a = ArithmeticClass(69)
 ```
 Any #glspl("parameter") in the `__init__` dunder method are ones you have to give when you make a class.\
 
-== Magic Methods (`__dunder__` methods)
-Magic methods define special functionality of objects that is more specific to the language rather than what you yourself make it do. Below I show some examples, including the fancy formatting I said I would cover way back in chapter 3. \
-
-Now we can't just print this class out -- this is what we get when we do:\
-```python <__main__.ArithmeticClass object at 0x7fc09fec7eb0```\
-We just got the memory address of it but not the value of it. This is because we didn't return anything in the `__init__` method -- and we can't as it must return the `None` type. \
-If you wanted to have an output from print you need to use the dunder method `__str__` which prints a string to the console when printing the object normally. Here's how to use it:\
-```python
-class ArithmeticClass:
-    def __init__(self, value):
-        self.value = value
-
-    def add_value(self, x):
-        return self.value + x
-    
-    def __str__(self):
-        return str(self.value)
-    
-
-a = ArithmeticClass(69)
-print(a)
-```
-The `__str__` method only returns a string, so you need to wrap it in the `str()` if it's not a string.\ \
-
-The only point of `__init__` is to initialise the class the #glspl("var"), not to do anything else. Hence the other dunder methods - such as `__str__` for string representation.\
-\
-There are other magic methods, for example there's the `__len__` method for defining a result when ran in the `len` function. \
-<dunder-format>
-I'll also show you how to make your own format specifiers. These are done with the `__format__` method. \
-```python
-class Text:
-    def __init__(self, text: str) -> None:
-        self.text = text
-
-    def __format__(self, format_spec: str) -> str:
-        match format_spec:
-            case 'upper':
-                return self.text.upper()
-            case _:
-                raise ValueError(f"{format_spec} does not exist")
-```
-This was a simplistic example of how to define a custom text object that has fancy formatting. \
-Here's how to use it: 
-```python
-cool_text: Text = Text("iNtErEsTiNg")
-print(f"{cool_text:upper}")
-```
-This gives us:
-```
-INTERESTING
-```
-
-== Static methods
-Now suppose we want to add some more general functions to our `ArithmeticClass`, that do general operations but don't change the state of the class (any values we defined that belong to the class, like the `self.value`. We could try do this at first:\
-```python
-class ArithmeticClass:
-    def __init__(self, value):
-        self.value = value
-
-    def add_value(self, x):
-        return self.value + x
-
-    def add_two_values(a, b):
-        return a + b
-
-```
-But this throws an error as we need to have the self #gls("parameter") on an instance method, which is the type that you've seen so far.
-What error? Here:\
-```
-TypeError: ArithmeticClass.add_two_values() takes 2 positional #glspl("arg") but 3 were given
-```
-Python is telling us that we gave it two many #glspl("arg"), you'll get the same error with this example:\
-```python
-def function(a, b):
-    return a + b
-
-
-result = function(0, 1, 2)
-```
-You may be confused as we only gave it `a, b` in the function call, but this error occurs because we have an instance method, which takes `self` (this can be called anything but by conversion it's called `self` in python, so python assumes you called the `self` instance #gls("parameter") `a`). \
-One way to fix this is to add self in the function definition, like this:\
-
-```python
-    def add_two_values(self, a, b):
-        return a + b
-```
-But this doesn't make any sense as we aren't using self, so why should we pass it in? \
-This is where `static` methods come in, they are a type of method that doesn't do anything to the instance. This is usually used for functions that you generally organise into a class for neater code, but there isn't another reason that they are in a class. You may have seen them in other languages shown like this, for example in java:\
-```java
-class HelloReader {
-    public static void main(String[] args) {
-      System.out.println("Hello reader!")
-    }
-}
-```
-This method is static because it doesn't do anything to the class state. But also python doesn't do this because it isn't a boilerplate (meme) language like java.
-\
-Anyway, to use static methods in python you add the ```python @staticmethod``` decorator to the method, like so:
-
-```python
-class ArithmeticClass:
-    # --snip--
-    @staticmethod
-    def add_two_values(a, b):
-        return a + b
-```
+== Encapsulation
+=== Public, protected, private (`_x`, `__x`)
+=== Name mangling explained
+=== Properties (`@property`, `@x.setter`, `@x.deleter`)
+=== Why encapsulation matters
 
 == Inheritance
+=== Single inheritance
+=== Method overriding
+=== `super()` - how and when to use it
+=== Multiple inheritance and the MRO (Method Resolution Order)
+=== `isinstance()`, `issubclass()`, and type checking
 
 The idea behind inheritance is that it allows you to more easily write similar #glspl("cls") by abstracting them to a 'parent' class and the 'child' #glspl("cls") inherit their properties, state, and behaviours. Then in the child class you can add separate functionality without having to copy and paste the whole parent class. \
 For example (and for this example I'm going to abstract the ideas, so it may not actually be a viable option if you were going to try build this), if you were building a city simulation game, and in the city there are many buildings.\
@@ -3234,10 +3095,147 @@ class House(Building) {
 ```
 
 Here we reused a bunch of things between our #glspl("cls"), like the cost and the space, just changing what was unique to the class.
+== Polymorphism
+=== Runtime polymorphism via method overriding
+=== Duck typing -- Python's idiomatic polymorphism
+=== Polymorphic built-ins (```python len str iter```)
+=== Operator overloading as polymorphism
 
-#pagebreak()
+== Magic Methods
 
-== Dataclasses
+=== Object lifecycle: `__new__`, `__init__`, `__del__`
+=== String representation: `__str__`, `__repr__`
+=== Comparison: `__eq__`, `__lt__`, `__hash__`
+=== Arithmetic: `__add__`, `__mul__`, `__sub__`, etc.
+=== Container emulation: `__len__`, `__getitem__`, `__setitem__`, `__iter__`, `__next__`
+=== Callable objects: `__call__`
+=== Context managers: `__enter__`, `__exit__`
+
+Magic methods define special functionality of objects that is more specific to the language rather than what you yourself make it do. Below I show some examples, including the fancy formatting I said I would cover way back in chapter 3. \
+
+Now we can't just print this class out -- this is what we get when we do:\
+```python <__main__.ArithmeticClass object at 0x7fc09fec7eb0```\
+We just got the memory address of it but not the value of it. This is because we didn't return anything in the `__init__` method -- and we can't as it must return the `None` type. \
+If you wanted to have an output from print you need to use the dunder method `__str__` which prints a string to the console when printing the object normally. Here's how to use it:\
+```python
+class ArithmeticClass:
+    def __init__(self, value):
+        self.value = value
+
+    def add_value(self, x):
+        return self.value + x
+    
+    def __str__(self):
+        return str(self.value)
+    
+
+a = ArithmeticClass(69)
+print(a)
+```
+The `__str__` method only returns a string, so you need to wrap it in the `str()` if it's not a string.\ \
+
+The only point of `__init__` is to initialise the class the #glspl("var"), not to do anything else. Hence the other dunder methods - such as `__str__` for string representation.\
+\
+There are other magic methods, for example there's the `__len__` method for defining a result when ran in the `len` function. \
+<dunder-format>
+I'll also show you how to make your own format specifiers. These are done with the `__format__` method. \
+```python
+class Text:
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+    def __format__(self, format_spec: str) -> str:
+        match format_spec:
+            case 'upper':
+                return self.text.upper()
+            case _:
+                raise ValueError(f"{format_spec} does not exist")
+```
+This was a simplistic example of how to define a custom text object that has fancy formatting. \
+Here's how to use it: 
+```python
+cool_text: Text = Text("iNtErEsTiNg")
+print(f"{cool_text:upper}")
+```
+This gives us:
+```
+INTERESTING
+```
+
+
+== Class Methods and Static Methods
+
+=== `@classmethod` -- alternative constructors
+
+=== `@staticmethod` -- utility functions
+
+Now suppose we want to add some more general functions to our `ArithmeticClass`, that do general operations but don't change the state of the class (any values we defined that belong to the class, like the `self.value`. We could try do this at first:\
+```python
+class ArithmeticClass:
+    def __init__(self, value):
+        self.value = value
+
+    def add_value(self, x):
+        return self.value + x
+
+    def add_two_values(a, b):
+        return a + b
+
+```
+But this throws an error as we need to have the self #gls("parameter") on an instance method, which is the type that you've seen so far.
+What error? Here:\
+```
+TypeError: ArithmeticClass.add_two_values() takes 2 positional #glspl("arg") but 3 were given
+```
+Python is telling us that we gave it two many #glspl("arg"), you'll get the same error with this example:\
+```python
+def function(a, b):
+    return a + b
+
+
+result = function(0, 1, 2)
+```
+You may be confused as we only gave it `a, b` in the function call, but this error occurs because we have an instance method, which takes `self` (this can be called anything but by conversion it's called `self` in python, so python assumes you called the `self` instance #gls("parameter") `a`). \
+One way to fix this is to add self in the function definition, like this:\
+
+```python
+    def add_two_values(self, a, b):
+        return a + b
+```
+But this doesn't make any sense as we aren't using self, so why should we pass it in? \
+This is where `static` methods come in, they are a type of method that doesn't do anything to the instance. This is usually used for functions that you generally organise into a class for neater code, but there isn't another reason that they are in a class. You may have seen them in other languages shown like this, for example in java:\
+```java
+class HelloReader {
+    public static void main(String[] args) {
+      System.out.println("Hello reader!")
+    }
+}
+```
+This method is static because it doesn't do anything to the class state. But also python doesn't do this because it isn't a boilerplate (meme) language like java.
+\
+Anyway, to use static methods in python you add the ```python @staticmethod``` decorator to the method, like so:
+
+```python
+class ArithmeticClass:
+    # --snip--
+    @staticmethod
+    def add_two_values(a, b):
+        return a + b
+```
+=== When to use which?
+
+== Abstract Base Classes (ABCs)
+=== Enforcing interfaces in Python
+=== `abc.ABC` and `@abstractmethod`
+=== Example: `Shape` with `area()` abstract method
+
+== Dataclasses -- Modern Python OOP
+=== `@dataclass` basics
+=== Default values, `field()`, `InitVar`
+=== `@dataclass(frozen=True)`, `@dataclass(order=True)`
+=== Post-init processing (`__post_init__`)
+=== When to use dataclasses vs regular classes
+
 In a lot of other languages, there's a way to group data together neatly in something called a 'struct' but here in python that doesn't exist, but we do have #glspl("cls"), and a special kind of class called a dataclass, can be very powerful and probably the best way to pass data around in python.
 Here's an example:\
 ```python
@@ -3308,14 +3306,18 @@ class User:
     email: str = ""
     _hash: str = ""
 ```
+== Composition over Inheritance
+=== "Has-a" vs "Is-a"
+=== Example: `Car` has an `Engine`, not inherits from it
+=== Favor composition for flexibility
 
+== Summary Exercises
+=== Ex1: BankAccount with private balance and property
+=== Ex2: Shape hierarchy with polymorphism and ABC
+=== Ex3: Custom List with `__getitem__`, `__len__`, `__add__`
+=== Ex4: `@dataclass` for `Point3D` with `__add__` and `__repr__`
+=== Ex5: Factory pattern using `@classmethod`
 
-== Summary exercises
-
-#note(
-    title: [Unfinished],
-    content: [I still have yet to add the exercises here, at some point I will update this.]
-)
 
 
 = Functional python <functional-chapter>
