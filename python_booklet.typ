@@ -1582,7 +1582,7 @@ Think about how you (as a person) normally check if a number is prime. Apply sim
 
 === Ex8
 #exercise(
-    title: [Collapse an matrix],
+    title: [Collapse a matrix],
     content: [Suppose you have a spreadsheet which you read in as a 2d array (list of lists) that has records of employee bonuses every month. It may look something like this:
 ```python
     bonuses = [
@@ -3463,76 +3463,68 @@ Recursion works this way when you have a task that you can take as the same task
 The function calls itself until it hits the base case which has a 'normal' return, returning 1, and pushes this back up the chain to close the function calls. \
 The next function call up, which is when we called ```python factorial(2)```. Here this evaluates to 2 \* factorial(1) which returned 1, which then evaluates to 2. The next call is factorial(3) and so on. This continues back up returning from each function until we finish.\
 \
-If you're familiar with C style loops, which I'll show below, we can take each part and turn it into the recursive function, making a normal loop a recursive loop. Let's start with a normal loop:\
-```c
-#include <stdio.h>
+Any while loop can be turned into a recursive function, so let's take a really simple example, where we print every element of an array: \
+```python
+def print_arr(arr: list) -> None:
+    i = 0
+    while i < len(arr):
+        print(arr[i])
+        i += 1
 
-void print_arr(int* arr, int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-}
 
-int main() {
-    int arr[] = {0, 1, 1, 2, 3, 5, 8, 13, 21};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    print_arr(arr, n);
-    return 0;
-}
+array = [0, 1, 1, 2, 3, 4, 8, 13, 21]
+print_arr(array)
 ```
-I apologise for not sticking with pure python, but C has the most universal ```c for``` loops, so I felt it would be more appropriate. Here all we do is define the array, the array's length as n, and pass it to the function print_arr.\
 It iterates over each element and prints it. \
-The for loop has three parts: the initialisation, (int i = 0), the condition (i < n), and the post (i++).\
-Equivalently in python it's this:
-```python 
-i = 0
-while i<10:
-    i += 1
-```
+The loop has three parts: the initialisation, (i = 0), the condition (i < len(arr)), and the post (i += 1).\
+\ 
 To turn this into a recursive loop, which is used in functional paradigms, where all #glspl("var") are #gls("imu"), we need to take care of this mutation, as it's not allowed to change #glspl("var").\
-In functional code, all you have is a function, so let's first take out this main body of our C into its own function, like so:\
-```c
-void print_index(int* arr, int index)
-{
-        const int item = arr[index];
-        printf("%d", item);
-}
+In functional code, all you have is a function, so let's first take out this main body of our code into its own function, like so:\
+
+```python
+def print_index(arr: list, index: int) -> None:
+    item = arr[index]
+    print(item)
 ```
+
 All this function does is print an item given an index, which is just what is being done for every time we iterate in the for loop.\
 To print the whole array we need to call this function for every item in our array.\
 First to get looping we add the function call at the end.\
-```c
-void print_index(int* arr, int index)
-{
-        const int item = arr[index];
-        printf("%d", item);
-        print_index(arr, index);
-}
+
+```python
+def print_index(arr: list, index: int) -> None:
+    item = arr[index]
+    print(item)
+    print_index(arr, index)
 ```
+
 But this is no good, as we are calling this function indefinitely and it just prints the same item over and over again.\
 To increment for every function call and no mutation, we add a new constant which is the next index, and call print_index with the next index each time.\
-```c
-void print_index(int* arr, int index)
-{
-        const int item = arr[index];
-        printf("%d", item);
-        const int nIdx = index + 1;
-        print_index(arr, nIdx);
-}
+
+```python
+def print_index(arr: list, index: int) -> None:
+    item = arr[index]
+    print(item)
+    next_index = index + 1
+    print_index(arr, next_index)
 ```
+
 But this goes until the end of the list until the program crashes as it tried to read an index past the length of the list.\
 To stop this we have our base case, which corresponds to our condition. We only run it so long as the index is in range, so pass the list's length, and have an if check.\
-```c
-void print_index(int* arr, int index, int n)
-{
-        if (index == n) 
-                return;
-        const int item = arr[index];
-        printf("%d\n", item);
-        print_index(arr, index + 1, n);
-}
+
+```python
+def print_index(arr: list, index: int) -> None:
+    if index == len(arr):
+        return
+    item = arr[index]
+    print(item)
+    print_index(arr, index + 1, n)
+
+array = [0, 1, 1, 2, 3, 4, 8, 13, 21]
+print_index(arr, 0)
 ```
-And there, we've swapped normal iteration for a recursive function call, rewriting our loop in a more functional way. This works the same way in python, so try to apply what I've shown you here.\
+
+And there, we've swapped normal iteration for a recursive function call, rewriting our loop in a more functional way. 
 
 === Interview question with recursion
 
@@ -3576,13 +3568,8 @@ This function now calls itself modifying the input until the value is 1, and the
 
 == Summary exercises
 
-=== Ex1
-#exercise(
-    title: [Rewrite in python],
-    content: [Given what you've learned, take the C code I used as the example and rewrite it in python. It's easier in python as you don't have to worry about the length of the array in the fancy way as you just use `len()` or the method. ]
-)
 
-=== Ex2
+=== Ex1
 #exercise(
     title: [Binary search],
     content: [Using recursion, so no mutation of #glspl("var"), write a binary search function, where given a list and an item will return a #gls("bool") depending on whether it was found. Binary search cuts in half repeatedly until the item is found, and only works for sorted data. \

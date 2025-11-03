@@ -358,31 +358,3 @@ def read_lines_generator(file_path):
 ```
 
 # Chapter 14
-
-# Ex1
-This is the original loop:
-```python
-def print_arr(arr: list) -> None:
-    i = 0
-    while i < len(arr):
-        print(arr[i])
-        i += 1
-
-
-array = [0, 1, 1, 2, 3, 4, 8, 13, 21]
-```
-
-Note this isn't very pythonic, just looping over the array would be much nicer, but this is translating more directly from C, which is lower level so doesn't have this feature.  
-This is the recursive function: 
-```python
-def print_index(arr: list, index: int, n: int) -> None:
-    if index == n:
-        return
-    item = arr[index]
-    print(item)
-    print_index(arr, index + 1, n)
-
-array = [0, 1, 1, 2, 3, 4, 8, 13, 21]
-print_index(arr, 0, len(arr))
-```
-
